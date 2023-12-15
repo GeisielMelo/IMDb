@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+
+  /* Custom scrollbar for Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(136, 146, 176) none;
+  overflow-y: scroll;
+}
+
+/* Custom scrollbar for Chromium */
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: none;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgb(136, 146, 176);
+  border-radius: none;
+}
