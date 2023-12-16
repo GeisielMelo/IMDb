@@ -31,6 +31,18 @@ const Featured: React.FC = () => {
     return path ? url : notFoundUrl
   }
 
+  const handleFormatToYear = (date: string): string => {
+    return date.split('-')[0]
+  }
+
+  const handleFormatVoteAverage = (vote: number): string => {
+    return Number(vote).toPrecision(2)
+  }
+
+  const handleFormatTitle = (title: string): string => {
+    return title.slice(0, 22) + '...'
+  }
+
   return (
     <div>
       <h1>Session Title</h1>
@@ -41,12 +53,14 @@ const Featured: React.FC = () => {
               <img className='w-full h-full object-cover rounded-md' src={handlePosterPath(element.poster_path)} alt={element.original_title} />
             </div>
 
-            <h1 className='mt-2' title={element.title}>{element.title}</h1>
-            <p>{element.release_date}</p>
+            <h1 className='mt-2' title={element.title}>
+              {handleFormatTitle(element.title)}
+            </h1>
+            <p>{handleFormatToYear(element.release_date)}</p>
             <div className='flex justify-between items-center py-2'>
               <div className='flex items-center gap-2'>
-                <img className='h-4' src={IMDB} alt='IMDB image' />
-                <p>{element.vote_average}</p>
+                <img className='h-4' loading='lazy' src={IMDB} alt='IMDB image' />
+                <p>{handleFormatVoteAverage(element.vote_average)}</p>
               </div>
               <div className='flex items-center gap-2'>
                 <button>
