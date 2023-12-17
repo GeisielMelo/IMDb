@@ -40,28 +40,30 @@ const Featured: React.FC = () => {
   }
 
   const handleFormatTitle = (title: string): string => {
-    return title.slice(0, 22) + '...'
+    return title.slice(0, 25) + '...'
   }
 
-  return (
-    <div>
-      <h1>Session Title</h1>
-      <div className='flex py-4 gap-4 rounded-md'>
-        {data.map((element, key) => (
-          <div key={key}>
-            <div className='w-44 h-64'>
-              <img className='w-full h-full object-cover rounded-md' src={handlePosterPath(element.poster_path)} alt={element.original_title} />
-            </div>
+  console.log(data.length)
 
-            <h1 className='mt-2' title={element.title}>
+  return (
+    <div className='flex justify-center overflow-hidden'>
+      <div className='w-[2.5rem] bg-red-700 z-10'></div>
+
+      <div className='flex w-[calc(100%-5rem)] translate-x-[-0%]'>
+        {data.map((element, key) => (
+          <div key={key} className='flex-shrink-0 flex-[0-0-25%] w-[12.5%] h-[18.8rem] aspect-[9/16] px-[.25rem]'>
+            <img className='max-h-[14rem] w-full' src={handlePosterPath(element.poster_path)} alt={element.original_title} />
+            <h1 className='mt-2 text-xs' title={element.title}>
               {handleFormatTitle(element.title)}
             </h1>
-            <p>{handleFormatToYear(element.release_date)}</p>
+            <p className='text-xs mt-1'>{handleFormatToYear(element.release_date)}</p>
+
             <div className='flex justify-between items-center py-2'>
               <div className='flex items-center gap-2'>
                 <img className='h-4' loading='lazy' src={IMDB} alt='IMDB image' />
                 <p>{handleFormatVoteAverage(element.vote_average)}</p>
               </div>
+
               <div className='flex items-center gap-2'>
                 <button>
                   <Eye />
@@ -74,6 +76,8 @@ const Featured: React.FC = () => {
           </div>
         ))}
       </div>
+
+      <div className='w-[2.5rem] bg-red-700 z-10'></div>
     </div>
   )
 }
