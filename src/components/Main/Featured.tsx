@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import information from '../../jsons/searched.json'
-import IMDB from '../../assets/svg/IMDB.svg'
-import { Eye, Heart } from 'lucide-react'
+// import IMDB from '../../assets/svg/IMDB.svg'
+// import { Eye, Heart } from 'lucide-react'
 
 type Data = {
   backdrop_path: string | null
@@ -19,6 +20,7 @@ type Data = {
 }
 
 const Featured: React.FC = () => {
+  const [translate, setTranslate] = useState(0);
   const data: Data[] = information.results
 
   if (!data || !Array.isArray(data)) {
@@ -31,54 +33,48 @@ const Featured: React.FC = () => {
     return path ? url : notFoundUrl
   }
 
-  const handleFormatToYear = (date: string): string => {
-    return date.split('-')[0]
-  }
+  // const handleFormatToYear = (date: string): string => {
+  //   return date.split('-')[0]
+  // }
 
-  const handleFormatVoteAverage = (vote: number): string => {
-    return Number(vote).toPrecision(2)
-  }
+  // const handleFormatVoteAverage = (vote: number): string => {
+  //   return Number(vote).toPrecision(2)
+  // }
 
-  const handleFormatTitle = (title: string): string => {
-    return title.slice(0, 25) + '...'
-  }
+  // const handleFormatTitle = (title: string): string => {
+  //   return title.slice(0, 25) + '...'
+  // }
 
-  console.log(data.length)
+
+  const handlePrev = () => {
+    setTranslate((prev) => Math.max(prev - 100, 0));
+  };
+
+  const handleNext = () => {
+    setTranslate((prev) => prev + 100);
+  };
+
 
   return (
+    <>
+    <p>{translate}</p>
     <div className='flex justify-center overflow-hidden'>
-      <div className='w-[2.5rem] bg-red-700 z-10'></div>
+      <div onClick={handlePrev} className='w-[2.5rem] border-solid border-2 border-sky-500  z-10'>{'<'}</div>
 
-      <div className='flex w-[calc(100%-5rem)] translate-x-[-0%]'>
+      <div className={`flex w-[calc(100%-5rem)] translate-x-[-${translate}.0%] transition-transform duration-500`}>
         {data.map((element, key) => (
-          <div key={key} className='flex-shrink-0 flex-[0-0-25%] w-[12.5%] h-[18.8rem] aspect-[9/16] px-[.25rem]'>
-            <img className='max-h-[14rem] w-full' src={handlePosterPath(element.poster_path)} alt={element.original_title} />
-            <h1 className='mt-2 text-xs' title={element.title}>
-              {handleFormatTitle(element.title)}
-            </h1>
-            <p className='text-xs mt-1'>{handleFormatToYear(element.release_date)}</p>
-
-            <div className='flex justify-between items-center py-2'>
-              <div className='flex items-center gap-2'>
-                <img className='h-4' loading='lazy' src={IMDB} alt='IMDB image' />
-                <p>{handleFormatVoteAverage(element.vote_average)}</p>
-              </div>
-
-              <div className='flex items-center gap-2'>
-                <button>
-                  <Eye />
-                </button>
-                <button>
-                  <Heart />
-                </button>
-              </div>
-            </div>
-          </div>
+          <img
+            key={key}
+            className='w-[33.3%] sm:w-[25%] md:w-[20%] lg:w-[14.29%] xl:w-[12.5%] aspect-[9/16] px-[.25rem] object-cover'
+            src={handlePosterPath(element.poster_path)}
+            alt={element.original_title}
+          />
         ))}
       </div>
 
-      <div className='w-[2.5rem] bg-red-700 z-10'></div>
+      <div onClick={handleNext} className='w-[2.5rem] border-solid border-2 border-sky-500  z-10'>{'>'}</div>
     </div>
+    </>
   )
 }
 
