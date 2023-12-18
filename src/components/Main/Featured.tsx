@@ -1,17 +1,20 @@
-import { useState } from 'react'
 import information from '../../jsons/searched.json'
-// import IMDB from '../../assets/svg/IMDB.svg'
-// import { Eye, Heart } from 'lucide-react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { register } from 'swiper/element/bundle'
+import { Prev, Next } from './Navigation'
+import 'swiper/css'
+register()
 
 type Data = {
-  backdrop_path: string | null
+  backdrop_path?: string | null
   poster_path: string | null
   original_language: string
-  original_title: string
+  original_title?: string
+  original_name?: string
   overview: string
-  release_date: string
-  title: string
-  video: boolean
+  release_date?: string
+  title?: string
+  video?: boolean
   adult: boolean
   genre_ids: number[]
   vote_average: number
@@ -20,8 +23,19 @@ type Data = {
 }
 
 const Featured: React.FC = () => {
-  const [translate, setTranslate] = useState(0);
   const data: Data[] = information.results
+
+  const params = {
+    navigation: true,
+    breakpoints: {
+      200: { slidesPerView: 3 },
+      475: { slidesPerView: 4 },
+      640: { slidesPerView: 5 },
+      768: { slidesPerView: 6 },
+      1024: { slidesPerView: 7 },
+      1280: { slidesPerView: 8 },
+    },
+  }
 
   if (!data || !Array.isArray(data)) {
     return
@@ -45,36 +59,21 @@ const Featured: React.FC = () => {
   //   return title.slice(0, 25) + '...'
   // }
 
-
-  const handlePrev = () => {
-    setTranslate((prev) => Math.max(prev - 100, 0));
-  };
-
-  const handleNext = () => {
-    setTranslate((prev) => prev + 100);
-  };
-
-
   return (
-    <>
-    <p>{translate}</p>
-    <div className='flex justify-center overflow-hidden'>
-      <div onClick={handlePrev} className='w-[2.5rem] border-solid border-2 border-sky-500  z-10'>{'<'}</div>
-
-      <div className={`flex w-[calc(100%-5rem)] translate-x-[-${translate}.0%] transition-transform duration-500`}>
-        {data.map((element, key) => (
+    <Swiper {...params} className='px-8 relative flex'>
+      <Prev />
+      {data.map((element, key) => (
+        <SwiperSlide key={key}>
           <img
-            key={key}
-            className='w-[33.3%] sm:w-[25%] md:w-[20%] lg:w-[14.29%] xl:w-[12.5%] aspect-[9/16] px-[.25rem] object-cover'
+            onClick={() => console.log(element.original_title || 'n tem')}
+            className='px-[0.25rem] aspect-[9/13]'
             src={handlePosterPath(element.poster_path)}
             alt={element.original_title}
           />
-        ))}
-      </div>
-
-      <div onClick={handleNext} className='w-[2.5rem] border-solid border-2 border-sky-500  z-10'>{'>'}</div>
-    </div>
-    </>
+        </SwiperSlide>
+      ))}
+      <Next />
+    </Swiper>
   )
 }
 
