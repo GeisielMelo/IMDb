@@ -13,6 +13,11 @@ export default {
       xl: '1280px',
       ...defaultTheme.screens,
     },
+    extend: {
+      colors: {
+        'transparent-silver': 'rgba(200,200,200,0.5)',
+      },
+    },
     plugins: [],
   },
 }
