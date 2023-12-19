@@ -1,12 +1,14 @@
 import Navigation from '../components/Header/Navigation'
-import Featured from '../components/Main/Featured'
+import Slider from '../components/Carousel/Slider'
 
 const Index: React.FC = () => {
   return (
-    <>
+    <main>
       <Navigation />
-      <Featured />
-    </>
+      <Slider />
+      <Slider />
+      <Slider />
+    </main>
   )
 }
 
