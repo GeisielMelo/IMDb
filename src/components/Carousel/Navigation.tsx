@@ -1,7 +1,7 @@
 import { useSwiper } from 'swiper/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-export const Prev = () => {
+export const Prev: React.FC = () => {
   const swiper = useSwiper()
   return (
     <button
@@ -13,7 +13,7 @@ export const Prev = () => {
   )
 }
 
-export const Next = () => {
+export const Next: React.FC = () => {
   const swiper = useSwiper()
   return (
     <button
