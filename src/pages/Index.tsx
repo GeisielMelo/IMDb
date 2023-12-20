@@ -5,9 +5,9 @@ const Index: React.FC = () => {
   return (
     <main>
       <Navigation />
-      <Slider />
-      <Slider />
-      <Slider />
+      <Slider category={'Trending'} url=''/>
+      <Slider category={'TV Show'} url=''/>
+      <Slider category={'Movies'} url=''/>
     </main>
   )
 }

@@ -4,13 +4,20 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { register } from 'swiper/element/bundle'
 import { MovieData } from '../../types/MovieData'
 import { Prev, Next } from './Navigation'
+import { ImageSkeleton } from './Skeletons'
 import Preview from '../Preview/Preview'
 import 'swiper/css'
 register()
 
-const Slider: React.FC = () => {
+type SliderTypes = {
+  category: string
+  url: string
+}
+
+const Slider: React.FC<SliderTypes> = ({ category, url }) => {
   const [previewData, setPreviewData] = useState<MovieData | null>(null)
   const data: MovieData[] = information.results
+  const loading = true
 
   const params = {
     navigation: true,
@@ -44,19 +51,31 @@ const Slider: React.FC = () => {
 
   return (
     <section className='pt-8'>
-      <h1 className='mb-4 pl-8 font-sans font-medium'>Trending</h1>
+      <h1 className='mb-4 pl-8 font-sans font-medium'>{category}</h1>
       <Swiper {...params} className='px-8 relative flex'>
         <Prev />
-        {data.map((element, key) => (
-          <SwiperSlide key={key}>
-            <img
-              onClick={() => handlePreviewClick(element)}
-              className='px-[0.25rem] aspect-[9/13] hover:cursor-pointer'
-              src={handlePosterPath(element.poster_path || element.backdrop_path)}
-              alt={element.original_title}
-            />
-          </SwiperSlide>
-        ))}
+        {loading ? (
+          <>
+            {[...Array(8)].map((_, index) => (
+              <SwiperSlide key={index}>
+                <ImageSkeleton />
+              </SwiperSlide>
+            ))}
+          </>
+        ) : (
+          <>
+            {data.map((element, key) => (
+              <SwiperSlide key={key}>
+                <img
+                  onClick={() => handlePreviewClick(element)}
+                  className='px-[0.25rem] aspect-[9/13] hover:cursor-pointer'
+                  src={handlePosterPath(element.poster_path || element.backdrop_path)}
+                  alt={element.original_title}
+                />
+              </SwiperSlide>
+            ))}
+          </>
+        )}
         <Next />
       </Swiper>
       {previewData && handleReturnPreview(previewData)}
