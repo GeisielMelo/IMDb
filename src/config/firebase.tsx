@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore';
 
 type TypeOptions = {
   apiKey: string
@@ -19,5 +20,6 @@ const options: TypeOptions = {
   appId: import.meta.env.VITE_FIREBASE_APPID,
 }
 
-initializeApp(options)
-export const auth = getAuth()
+const app = initializeApp(options)
+export const auth = getAuth(app)
+export const database = getFirestore(app)
