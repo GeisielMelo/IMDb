@@ -1,11 +1,26 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, User, onAuthStateChanged, signOut } from 'firebase/auth'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react'
+
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  UserCredential,
+  User,
+  onAuthStateChanged,
+  signOut,
+} from 'firebase/auth'
+
 import { auth } from '../config/firebase'
 
 type AuthContextProps = {
   authenticated: boolean
   user: User | null
-  loading : boolean
+  loading: boolean
   signUp: (email: string, password: string) => Promise<UserCredential>
   signIn: (email: string, password: string) => Promise<UserCredential>
   logout: () => Promise<void>
@@ -57,7 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loading,
     signUp,
     signIn,
-    logout
+    logout,
   }
 
   return (
