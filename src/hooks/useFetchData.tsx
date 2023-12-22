@@ -11,7 +11,7 @@ type FetchDataReturn<T> = {
   error: FetchDataError | null
 }
 
-export function useFetchData<T>(url: string): FetchDataReturn<T> {
+export function useFetchData<T>(url: string, options?:object): FetchDataReturn<T> {
   const [data, setData] = useState<T | null>(null)
   const [error, setError] = useState<FetchDataError | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -19,7 +19,7 @@ export function useFetchData<T>(url: string): FetchDataReturn<T> {
   useEffect(() => {
     const fetchData = async ():Promise<void> => {
       try {
-        const response = await fetch(url)
+        const response = options ? await fetch(url, options) : await fetch(url)
         const data = await response.json()
         setData(data)
       } catch (error) {

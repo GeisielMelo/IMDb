@@ -1,4 +1,5 @@
 import { useAuth } from '../context/AuthContext'
+import { options } from '../config/themoviedb'
 import Navigation from '../components/Header/Navigation'
 import Slider from '../components/Carousel/Slider'
 
@@ -21,9 +22,7 @@ const Index: React.FC = () => {
   return (
     <main>
       <Navigation user={user} handleLogOut={handleLogOut} />
-      <Slider category={'Trending'} url={url.trending} />
-      <Slider category={'Movies'} url={url.movies} />
-      <Slider category={'TV Show'} url={url.tvShow} />
+      <Slider category={'Trending'} url={url.trending} options={options} />
     </main>
   )
 }

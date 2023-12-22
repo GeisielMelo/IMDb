@@ -1,6 +1,8 @@
-import information from '../../jsons/searched.json'
+import { useFetchData } from '../../hooks/useFetchData'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { params } from '../../config/swiper'
 import { register } from 'swiper/element/bundle'
 import { MovieData } from '../../types/MovieData'
 import { Prev, Next } from './Navigation'
@@ -12,28 +14,21 @@ register()
 type SliderTypes = {
   category: string
   url: string
+  options?: object
 }
 
-const Slider: React.FC<SliderTypes> = ({ category, url }) => {
+type ResultTypes = {
+  results: MovieData[];
+}
+
+const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
+  const navigate = useNavigate()
   const [previewData, setPreviewData] = useState<MovieData | null>(null)
-  const data: MovieData[] = information.results
-  const loading = true
+  const { data, error, loading } = useFetchData<ResultTypes>(url, options)
 
-  const params = {
-    navigation: true,
-    breakpoints: {
-      200: { slidesPerView: 3 },
-      475: { slidesPerView: 4 },
-      640: { slidesPerView: 5 },
-      768: { slidesPerView: 6 },
-      1024: { slidesPerView: 7 },
-      1280: { slidesPerView: 8 },
-    },
-  }
-
-  if (!data || !Array.isArray(data)) {
-    return
-  }
+  if (error) navigate('/404')
+  if (!data || !Array.isArray(data.results)) return
+  const results: MovieData[] = data.results;
 
   const handlePosterPath = (path: string | null): string => {
     const url = `https://image.tmdb.org/t/p/w500${path}`
@@ -64,12 +59,14 @@ const Slider: React.FC<SliderTypes> = ({ category, url }) => {
           </>
         ) : (
           <>
-            {data.map((element, key) => (
+            {results.map((element, key) => (
               <SwiperSlide key={key}>
                 <img
                   onClick={() => handlePreviewClick(element)}
                   className='px-[0.25rem] aspect-[9/13] hover:cursor-pointer'
-                  src={handlePosterPath(element.poster_path || element.backdrop_path)}
+                  src={handlePosterPath(
+                    element.poster_path || element.backdrop_path,
+                  )}
                   alt={element.original_title}
                 />
               </SwiperSlide>
