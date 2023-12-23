@@ -1,24 +1,28 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { User } from 'firebase/auth'
-import { Menu, X, Search } from 'lucide-react'
+import { useAuth } from '../../context/AuthContext'
+import { Menu, X, Search, LogOut, Star } from 'lucide-react'
 import logo from '../../assets/svg/IMDB.svg'
 
-type UserProps = {
-  user: User | null
-  handleLogOut: () => Promise<void>
-}
-
-const Navigation: React.FC<UserProps> = ({ user, handleLogOut }) => {
+const Navigation: React.FC = () => {
   const navigate = useNavigate()
+  const { user, logout } = useAuth()
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
+  const handleLogOut = async () => {
+    try {
+      await logout()
+    } catch (error) {
+      console.error('Error on Logout.')
+    }
+  }
+
   return (
-    <nav className='flex justify-between items-center px-6 py-2'>
+    <nav className='flex justify-between items-center p-4 shadow-md'>
       <img className='h-8' src={logo} alt='Logo' />
 
-      <div className={`absolute md:static bg-white left-0 top-12 md:w-auto w-full flex justify-center items-center px-6 ${!isOpen && 'hidden'} md:block z-20`} >
-        <ul className='flex md:flex-row flex-col justify-center items-center md:gap-[4vw] py-2 gap-8'>
+      <div className={`absolute md:static bg-white left-0 top-12 md:w-auto w-full flex justify-center items-center ${!isOpen && 'hidden'} md:block z-20`} >
+        <ul className='flex flex-col justify-center items-center gap-8 py-4 shadow-lg md:py-0 md:flex-row md:gap-[4vw] md:shadow-none'>
           {user && <li className='whitespace-nowrap md:hidden' onClick={() => navigate('/my-list')}>My List</li>}
           {user ? (
             <li className='whitespace-nowrap md:hidden' onClick={() => handleLogOut()}>Logout</li>
@@ -26,16 +30,17 @@ const Navigation: React.FC<UserProps> = ({ user, handleLogOut }) => {
             <li className='whitespace-nowrap md:hidden' onClick={() => navigate('/sign-in')}>Login</li>
           )}
 
-          <li className='flex '><input className='px-2 w-full' type='text' placeholder='Search...'/>
+          <li className='flex mb-4 md:mb-0'>
+            <input className='px-2 w-full' type='text' placeholder='Search...'/>
             <button className='px-2 py-1'><Search /></button>
           </li>
         </ul>
       </div>
 
-      <div className='flex gap-4'>
-        {user && <button className='hidden md:block' onClick={() => navigate('/my-list')}>My List</button>}
+      <div className='flex gap-8'>
+        {user && <button className='hidden md:block' onClick={() => navigate('/my-list')}><Star /></button>}
         {user ? (
-          <button className='hidden md:block' onClick={() => handleLogOut()}>Logout</button>
+          <button className='hidden md:block' onClick={() => handleLogOut()}><LogOut /></button>
         ) : (
           <button className='hidden md:block' onClick={() => navigate('/sign-in')}>Login</button>
         )}
