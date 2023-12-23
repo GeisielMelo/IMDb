@@ -29,7 +29,7 @@ export function useFetchData<T>(url: string, options?:object): FetchDataReturn<T
       }
     }
     fetchData()
-  }, [url])
+  }, [url, options])
 
   return { data, error, loading }
 }
