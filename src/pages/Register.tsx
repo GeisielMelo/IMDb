@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,20 +13,21 @@ const Register: React.FC = () => {
   const [error, setError] = useState('')
   const [data, setData] = useState({ email: '', passA: '', passB: '' })
 
-  const handleSubmit = async (email: string, passA: string, passB: string) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault()
     try {
       setError('')
       setLoading(true)
 
-      if (passA.length <= 5) {
+      if (data.passA.length <= 5) {
         return setError('Password should be at least 6 characters.')
       }
 
-      if (passA != passB) {
+      if (data.passA != data.passB) {
         return setError('Password do not match.')
       }
 
-      await signUp(email, passA)
+      await signUp(data.email, data.passA)
       navigate('/')
     } catch (error) {
       if ((error as AuthError).code == 'auth/email-already-in-use') {
@@ -39,33 +40,59 @@ const Register: React.FC = () => {
 
   return (
     <section className='flex h-[100dvh] justify-center items-center'>
-      <div className='flex flex-col gap-4'>
-        {error && <p>Error: {error}</p>}
-        <input
-          type='email'
-          placeholder='E-mail'
-          value={data.email}
-          onChange={(e) => setData({ ...data, email: e.target.value })}
-        />
-        <input
-          type='password'
-          placeholder='Password'
-          value={data.passA}
-          onChange={(e) => setData({ ...data, passA: e.target.value })}
-        />
-        <input
-          type='password'
-          placeholder='Password'
-          value={data.passB}
-          onChange={(e) => setData({ ...data, passB: e.target.value })}
-        />
+      <div className='max-w-[400px] w-full shadow-custom rounded-md text-center'>
+        <form
+          className='flex flex-col justify-center items-center gap-4 px-8  w-full '
+          onSubmit={handleSubmit}
+        >
+          <h1 className='mt-8'>Sign Up</h1>
+          {error && <p>Error: {error}</p>}
+          <input
+            className='px-2 py-1 w-full border border-slate-400 rounded-lg'
+            type='email'
+            name='email'
+            autoComplete='on'
+            placeholder='E-mail'
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
+          />
+          <input
+            className='px-2 py-1 w-full border border-slate-400 rounded-lg'
+            type='password'
+            name='password'
+            autoComplete='on'
+            placeholder='Password'
+            value={data.passA}
+            onChange={(e) => setData({ ...data, passA: e.target.value })}
+          />
+          <input
+            className='px-2 py-1 w-full border border-slate-400 rounded-lg'
+            type='password'
+            name='confirm-password'
+            autoComplete='on'
+            placeholder='Password'
+            value={data.passB}
+            onChange={(e) => setData({ ...data, passB: e.target.value })}
+          />
+
+          <button
+            className='w-full border border-slate-400 py-2 rounded-lg'
+            disabled={loading}
+            type='submit'
+          >
+            Submit
+          </button>
+        </form>
+        <p className='mb-8 mt-2 text-sm'>
+          Already have an account?{' '}
+          <span
+            className='cursor-pointer underline'
+            onClick={() => navigate('/sign-in')}
+          >
+            Sign In
+          </span>
+        </p>
       </div>
-      <button
-        disabled={loading}
-        onClick={() => handleSubmit(data.email, data.passA, data.passB)}
-      >
-        Submit
-      </button>
     </section>
   )
 }
