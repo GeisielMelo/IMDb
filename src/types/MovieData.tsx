@@ -7,6 +7,7 @@ export type MovieData = {
   overview: string
   release_date?: string
   first_air_date?: string
+  media_type: string
   title?: string
   name?: string
   video?: boolean
@@ -15,4 +16,5 @@ export type MovieData = {
   vote_average: number
   vote_count: number
   popularity: number
+  id: number
 }
