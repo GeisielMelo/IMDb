@@ -17,6 +17,9 @@ export default {
       colors: {
         'transparent-silver': 'rgba(200,200,200,0.5)',
       },
+      boxShadow: {
+        'custom': '0 1px 7px 2px rgba(0, 0, 0, 0.3)',
+      },
     },
     plugins: [],
   },
