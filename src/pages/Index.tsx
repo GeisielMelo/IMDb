@@ -1,18 +1,20 @@
-import { options } from '../config/themoviedb'
+import { options, url } from '../config/themoviedb'
 import Navigation from '../components/Header/Navigation'
 import Slider from '../components/Carousel/Slider'
-
-const url = {
-  trending: 'https://api.themoviedb.org/3/trending/all/day?language=en-US',
-  movies: 'https://api.themoviedb.org/3/trending/movie/day?language=en-US',
-  tvShow: 'https://api.themoviedb.org/3/trending/tv/day?language=en-US',
-}
+import ListSlider from '../components/Carousel/ListSlider'
+import { useMovies } from '../context/MovieContext'
 
 const Index: React.FC = () => {
+  const { movies } = useMovies()
+
   return (
     <main>
       <Navigation />
+      {!!movies.length && <ListSlider category='My List' data={movies} />}
       <Slider category={'Trending'} url={url.trending} options={options} />
+      <Slider category={'Recently added'} url={url.upcoming} options={options} />
+      <Slider category={'Movies'} url={url.movies} options={options} />
+      <Slider category={'Tv Show'} url={url.tvShow} options={options} />
     </main>
   )
 }
