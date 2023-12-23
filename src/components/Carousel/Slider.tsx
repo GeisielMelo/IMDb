@@ -18,7 +18,7 @@ type SliderTypes = {
 }
 
 type ResultTypes = {
-  results: MovieData[];
+  results: MovieData[]
 }
 
 const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
@@ -28,7 +28,7 @@ const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
 
   if (error) navigate('/404')
   if (!data || !Array.isArray(data.results)) return
-  const results: MovieData[] = data.results;
+  const results: MovieData[] = data.results
 
   const handlePosterPath = (path: string | null): string => {
     const url = `https://image.tmdb.org/t/p/w500${path}`

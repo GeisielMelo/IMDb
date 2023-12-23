@@ -8,6 +8,10 @@ type Data = {
   setPreviewData: React.Dispatch<React.SetStateAction<MovieData | null>>
 }
 
+type LikeError = {
+  message: string
+}
+
 const Preview: React.FC<Data> = ({ setPreviewData, elementData }) => {
   const { movies, addMovie, removeMovie } = useMovies()
 
@@ -34,12 +38,16 @@ const Preview: React.FC<Data> = ({ setPreviewData, elementData }) => {
   }
 
   const handleAlreadyAdded = (): boolean => {
-    return movies.some((item:MovieData) => item.id === elementData.id)
+    return movies.some((item: MovieData) => item.id === elementData.id)
   }
 
   const handleLikeMovie = () => {
-    const alreadyExists = handleAlreadyAdded()
-    return alreadyExists ? removeMovie(elementData) : addMovie(elementData)
+    try {
+      const alreadyExists = handleAlreadyAdded()
+      return alreadyExists ? removeMovie(elementData) : addMovie(elementData)
+    } catch (error) {
+      alert((error as LikeError).message)
+    }
   }
 
   return (
