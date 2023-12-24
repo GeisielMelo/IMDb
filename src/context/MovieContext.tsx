@@ -25,56 +25,65 @@ const MovieContext = createContext<MoviesContextProps | undefined>(undefined)
 export const useMovies = () => {
   const context = useContext(MovieContext)
   if (!context) {
-    throw new Error('useAuth must be used inside an AuthProvider.')
+    throw new Error('useMovies must be used inside a MovieProvider.')
   }
   return context
 }
 
 export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
   const { authenticated, user } = useAuth()
-  const [movies, setMovies] = useState<MovieData[] | []>([])
+  const [movies, setMovies] = useState<MovieData[]>([])
+  const [synced, setSynced] = useState<boolean>(false)
 
   useEffect(() => {
-    const fetchHistory = async () => {
-      if (user) {
+    const fetchInitialMovies = async () => {
+      if (user && !synced) {
         try {
           const data = await show(user.uid)
           if (data) {
-            if (data.movies) setMovies(data.movies)
+            if (!data.movies.length) {
+              return
+            } else {
+              setMovies(data.movies)
+            }
+            setSynced(true)
           } else {
             await create(user.uid)
+            setSynced(true)
           }
         } catch (error) {
-          console.error('An error occurred while fetching the data.')
+          console.error('An error occurred while fetching initial movies.')
         }
       }
     }
-    fetchHistory()
-  }, [user])
+    fetchInitialMovies()
+  }, [user, synced, movies])
 
-  const syncData = async () => {
-    try {
-      if (user) await update(movies, user.uid)
-    } catch (error) {
-      console.error('An error occurred while synchronizing the data.')
+  const addMovie = async (data: MovieData) => {
+    if (!authenticated || !user) {
+      throw Error('You must be connected to perform this action.')
     }
-  }
 
-  const addMovie = (data: MovieData) => {
-    if (!authenticated)
-      throw Error('You must be connected to perform this action.')
     setMovies((prev) => [...prev, data])
-    syncData()
+    const newMovies = [...movies]
+    newMovies.push(data)
+    update(newMovies, user.uid)
   }
 
-  const removeMovie = (data: MovieData) => {
-    if (!authenticated)
+  const removeMovie = async (data: MovieData) => {
+    if (!authenticated || !user) {
       throw Error('You must be connected to perform this action.')
+    }
     setMovies((prev) => prev.filter((movie: MovieData) => movie.id !== data.id))
-    syncData()
+    const newMovies = movies.filter((movie: MovieData) => movie.id !== data.id)
+    update(newMovies, user.uid)
   }
 
-  const value: MoviesContextProps = { movies, addMovie, removeMovie }
+  const value: MoviesContextProps = {
+    movies,
+    addMovie,
+    removeMovie,
+  }
 
   return <MovieContext.Provider value={value}>{children}</MovieContext.Provider>
 }
