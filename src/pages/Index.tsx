@@ -8,14 +8,16 @@ const Index: React.FC = () => {
   const { movies } = useMovies()
 
   return (
-    <main>
+    <>
       <Navigation />
-      {!!movies.length && <ListSlider category='My List' data={movies} />}
-      <Slider category={'Trending'} url={url.trending} options={options} />
-      <Slider category={'Recently added'} url={url.upcoming} options={options} />
-      <Slider category={'Movies'} url={url.movies} options={options} />
-      <Slider category={'Tv Show'} url={url.tvShow} options={options} />
-    </main>
+      <section>
+        {!!movies.length && <ListSlider category='My List' data={movies} />}
+        <Slider category={'Trending'} url={url.trending} options={options} />
+        <Slider category={'Upcoming'} url={url.upcoming} options={options} />
+        <Slider category={'Movies'} url={url.movies} options={options} />
+        <Slider category={'Tv Show'} url={url.tvShow} options={options} />
+      </section>
+    </>
   )
 }
 
