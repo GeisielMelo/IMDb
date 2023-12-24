@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { Menu, X, Search, LogOut, Star } from 'lucide-react'
+import { SearchBar } from './SearchBar'
+import { Menu, X, LogOut, Star } from 'lucide-react'
 import logo from '../../assets/svg/IMDB.svg'
 
 const Navigation: React.FC = () => {
@@ -19,7 +20,7 @@ const Navigation: React.FC = () => {
 
   return (
     <nav className='flex justify-between items-center p-4 shadow-md'>
-      <img className='h-8' src={logo} alt='Logo' />
+      <img className='h-8 cursor-pointer' src={logo} onClick={() => navigate('/')} alt='Logo' />
 
       <div className={`absolute md:static bg-white left-0 top-12 md:w-auto w-full flex justify-center items-center ${!isOpen && 'hidden'} md:block z-20`} >
         <ul className='flex flex-col justify-center items-center gap-8 py-4 shadow-lg md:py-0 md:flex-row md:gap-[4vw] md:shadow-none'>
@@ -29,11 +30,7 @@ const Navigation: React.FC = () => {
           ) : (
             <li className='whitespace-nowrap md:hidden' onClick={() => navigate('/sign-in')}>Login</li>
           )}
-
-          <li className='flex mb-4 md:mb-0'>
-            <input className='px-2 w-full' type='text' placeholder='Search...'/>
-            <button className='px-2 py-1'><Search /></button>
-          </li>
+          <SearchBar/>
         </ul>
       </div>
 

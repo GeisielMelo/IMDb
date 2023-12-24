@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import List from './pages/List'
 import NotFound from './pages/NotFound'
+import Search from './pages/Search'
 
 type RoutesProps = {
   children: ReactNode
@@ -42,6 +43,7 @@ const AppRoutes: React.FC = () => {
         <Route path={'*'} element={<NotFound />} />
         <Route path={'sign-in'} element={<Public><Login /></Public>}/>
         <Route path={'sign-up'} element={<Public><Register /></Public>}/>
+        <Route path={'/search'} element={<Search />}/>
         <Route path={'/my-list'} element={<Private><List /></Private>}/>
       </Routes>
     </BrowserRouter>
