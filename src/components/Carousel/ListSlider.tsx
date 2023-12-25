@@ -34,7 +34,7 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data }) => {
   )
 
   return (
-    <section className='pt-8'>
+    <div className='pt-8'>
       <h1 className='mb-4 pl-8 font-sans font-medium'>{category}</h1>
       <Swiper {...params} className='px-8 relative flex'>
         <Prev />
@@ -53,7 +53,7 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data }) => {
         <Next />
       </Swiper>
       {previewData && handleReturnPreview(previewData)}
-    </section>
+    </div>
   )
 }
 
