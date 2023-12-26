@@ -14,6 +14,7 @@ type MovieProviderProps = {
 }
 
 type MoviesContextProps = {
+  loading: boolean
   movies: MovieData[]
   addMovie: (data: MovieData) => void
   removeMovie: (data: MovieData) => void
@@ -34,11 +35,13 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
   const { authenticated, user } = useAuth()
   const [movies, setMovies] = useState<MovieData[]>([])
   const [synced, setSynced] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchInitialMovies = async () => {
       if (user && !synced) {
         try {
+          setLoading(true)
           const data = await show(user.uid)
           if (data) {
             if (!data.movies.length) {
@@ -53,6 +56,8 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
           }
         } catch (error) {
           console.error('An error occurred while fetching initial movies.')
+        } finally {
+          setLoading(false)
         }
       }
     }
@@ -80,6 +85,7 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
   }
 
   const value: MoviesContextProps = {
+    loading,
     movies,
     addMovie,
     removeMovie,

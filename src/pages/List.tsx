@@ -7,7 +7,7 @@ import ListSlider from '../components/Carousel/ListSlider'
 
 const List: React.FC = () => {
   const navigate = useNavigate()
-  const { movies } = useMovies()
+  const { movies, loading } = useMovies()
   const { logout } = useAuth()
   const movieList: MovieData[] = []
   const serieList: MovieData[] = []
@@ -33,13 +33,13 @@ const List: React.FC = () => {
       {movies.length ? (
         <>
           {!!movieList.length && (
-            <ListSlider category='Movies' data={movieList} />
+            <ListSlider category='Movies' data={movieList} loading={loading} />
           )}
           {!!serieList.length && (
-            <ListSlider category='Series' data={serieList} />
+            <ListSlider category='Series' data={serieList} loading={loading} />
           )}
           {!!otherList.length && (
-            <ListSlider category='Others' data={otherList} />
+            <ListSlider category='Others' data={otherList} loading={loading} />
           )}
         </>
       ) : (

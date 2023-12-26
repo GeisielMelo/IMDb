@@ -7,6 +7,7 @@ import { register } from 'swiper/element/bundle'
 import { MovieData } from '../../types/MovieData'
 import { Prev, Next } from './Navigation'
 import { ImageSkeleton } from './Skeletons'
+import { Image } from './Image'
 import Preview from '../Preview/Preview'
 import 'swiper/css'
 register()
@@ -24,7 +25,7 @@ type ResultTypes = {
 const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
   const navigate = useNavigate()
   const [previewData, setPreviewData] = useState<MovieData | null>(null)
-  const { data, error, loading } = useFetchData<ResultTypes>(url, options)
+  const { data, loading, error } = useFetchData<ResultTypes>(url, options)
 
   if (error) navigate('/404')
   if (!data || !Array.isArray(data.results)) return
@@ -61,9 +62,8 @@ const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
           <>
             {results.map((element, key) => (
               <SwiperSlide key={key}>
-                <img
+                <Image
                   onClick={() => handlePreviewClick(element)}
-                  className='px-[0.25rem] aspect-[9/13] hover:cursor-pointer'
                   src={handlePosterPath(
                     element.poster_path || element.backdrop_path,
                   )}
