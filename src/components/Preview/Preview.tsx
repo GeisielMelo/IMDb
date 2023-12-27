@@ -1,7 +1,7 @@
 import { MovieData } from '../../types/MovieData'
 import { useMovies } from '../../context/MovieContext'
-import { Heart } from 'lucide-react'
-import IMDB from '../../assets/svg/IMDB.svg'
+import { Image } from './PreviewImage'
+import { Info } from './PreviewInfo'
 
 type Data = {
   elementData: MovieData
@@ -44,8 +44,9 @@ const Preview: React.FC<Data> = ({ setPreviewData, elementData }) => {
   const handleLikeMovie = () => {
     try {
       const alreadyExists = handleAlreadyAdded()
-      return alreadyExists ? removeMovie(elementData) : addMovie(elementData)
+      alreadyExists ? removeMovie(elementData) : addMovie(elementData)
     } catch (error) {
+      console.log(error)
       alert((error as LikeError).message)
     }
   }
@@ -53,52 +54,21 @@ const Preview: React.FC<Data> = ({ setPreviewData, elementData }) => {
   return (
     <div className='fixed top-0 flex justify-center items-center h-[100dvh] w-screen z-30 backdrop-blur-md px-4'>
       <div className='relative max-w-[560px] md:max-w-[700px] md:flex p-8 rounded-lg shadow bg-white'>
-        <img
-          loading='lazy'
-          className='hidden md:block	md:max-h-80 md:aspect-[9/16] md:object-cover'
-          src={handlePosterPath(
-            elementData.poster_path || elementData.backdrop_path,
-          )}
+        <Image
+          backdrop={handlePosterPath(elementData.backdrop_path)}
+          poster={handlePosterPath(elementData.poster_path)}
           alt={handleSetName(elementData)}
         />
-        {elementData.backdrop_path && (
-          <img
-            loading='lazy'
-            className='md:hidden'
-            src={handlePosterPath(elementData.backdrop_path)}
-            alt={handleSetName(elementData)}
-          />
-        )}
-        <div className='flex flex-col mt-4 md:ml-4 md:mt-0'>
-          <h1 className='font-sans font-medium'>
-            {handleSetName(elementData)}
-            {' - '}
-            {handleFormatToYear(
-              elementData.release_date ?? elementData.first_air_date ?? '',
-            )}
-          </h1>
-
-          <p className='py-4 mb-8'>{elementData.overview}</p>
-
-          <>
-            <div className='absolute bottom-8 flex gap-2'>
-              <img loading='lazy' className='w-12' src={IMDB} alt='IMDB Logo' />
-              <span>{handleFormatVoteAverage(elementData.vote_average)}</span>
-            </div>
-            <div className='absolute bottom-8 right-8 flex gap-2'>
-              <button
-                className='bg-transparent'
-                onClick={() => handleLikeMovie()}
-              >
-                {handleAlreadyAdded() ? (
-                  <Heart className={'text-red-600'} />
-                ) : (
-                  <Heart />
-                )}
-              </button>
-            </div>
-          </>
-        </div>
+        <Info
+          title={handleSetName(elementData)}
+          year={handleFormatToYear(
+            elementData.release_date ?? elementData.first_air_date ?? '',
+          )}
+          description={elementData.overview}
+          vote={handleFormatVoteAverage(elementData.vote_average)}
+          onLike={() => handleLikeMovie()}
+          added={handleAlreadyAdded()}
+        />
         <button
           className='absolute w-4 h-4 top-2 right-2 rounded-[50%] text-sm bg-red-600'
           onClick={() => setPreviewData(null)}
