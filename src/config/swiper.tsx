@@ -1,11 +1,11 @@
 export const params: object = {
   navigation: true,
   breakpoints: {
-    200: { slidesPerView: 3 },
-    475: { slidesPerView: 4 },
-    640: { slidesPerView: 5 },
-    768: { slidesPerView: 6 },
-    1024: { slidesPerView: 7 },
-    1280: { slidesPerView: 8 },
+    240: { slidesPerView: 2 },
+    475: { slidesPerView: 3 },
+    640: { slidesPerView: 4 },
+    768: { slidesPerView: 5 },
+    1024: { slidesPerView: 6 },
+    1280: { slidesPerView: 7 },
   },
 }
