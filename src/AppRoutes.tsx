@@ -2,13 +2,14 @@ import { ReactNode } from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 
-import Index from './pages/Index'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import List from './pages/List'
-import NotFound from './pages/NotFound'
-import Search from './pages/Search'
-import Title from './pages/Title'
+import Home from './pages/Main/Home'
+import Login from './pages/Sign/Login'
+import Register from './pages/Sign/Register'
+import List from './pages/Main/List'
+import NotFound from './pages/Error/NotFound'
+import Search from './pages/Main/Search'
+import Serie from './pages/Main/Serie'
+import Movie from './pages/Main/Movie'
 
 type RoutesProps = {
   children: ReactNode
@@ -17,7 +18,7 @@ type RoutesProps = {
 const AppRoutes: React.FC = () => {
   const { authenticated, loading } = useAuth()
 
-  const Private:React.FC<RoutesProps> = ({ children }) => {
+  const Private: React.FC<RoutesProps> = ({ children }) => {
     return loading ? (
       <span>Loading...</span>
     ) : authenticated ? (
@@ -27,7 +28,7 @@ const AppRoutes: React.FC = () => {
     )
   }
 
-  const Public:React.FC<RoutesProps>  = ({ children }) => {
+  const Public: React.FC<RoutesProps> = ({ children }) => {
     return loading ? (
       <span>Loading...</span>
     ) : authenticated ? (
@@ -40,12 +41,13 @@ const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={'/'} element={<Index />} />
+        <Route path={'/'} element={<Home />} />
         <Route path={'*'} element={<NotFound />} />
+        <Route path={'/search'} element={<Search />} />
+        <Route path={'/serie/:id'} element={<Serie />} />
+        <Route path={'/movie/:id'} element={<Movie />} />
         <Route path={'sign-in'} element={<Public><Login /></Public>}/>
         <Route path={'sign-up'} element={<Public><Register /></Public>}/>
-        <Route path={'/search'} element={<Search />}/>
-        <Route path={'/title/:id'} element={<Title />}/>
         <Route path={'/my-list'} element={<Private><List /></Private>}/>
       </Routes>
     </BrowserRouter>

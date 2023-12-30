@@ -1,7 +1,8 @@
 import { useLocation } from 'react-router-dom'
-import { options } from '../config/themoviedb'
-import Navigation from '../components/Header/Navigation'
-import Slider from '../components/Carousel/Slider'
+import { options } from '../../config/themoviedb'
+import Navigation from '../../components/Header/Navigation'
+import Footer from '../../components/Footer/Footer'
+import Slider from '../../components/Carousel/Slider'
 
 const Search = () => {
   const { search } = useLocation()
@@ -16,15 +17,8 @@ const Search = () => {
   return (
     <>
       <Navigation />
-      <section>
-        {q && (
-          <Slider
-            category={'Results'}
-            url={formatUrl(q, 1)}
-            options={options}
-          />
-        )}
-      </section>
+      <section className='py-10'>{q && <Slider category={'Results'} url={formatUrl(q, 1)} options={options} />}</section>
+      <Footer fixed={true} />
     </>
   )
 }
