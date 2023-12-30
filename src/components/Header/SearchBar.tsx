@@ -17,7 +17,8 @@ export const SearchBar: React.FC = () => {
   }
 
   return (
-    <div className='flex mb-4 md:mb-0 border border-blue-950'>
+    <div className='absolute w-full px-8 py-4 mt-2 bg-white'>
+    <div className='flex w-full border border-blue-950'>
       <input
         className='px-2 w-full outline-none focus:outline-none'
         value={params}
@@ -29,6 +30,7 @@ export const SearchBar: React.FC = () => {
       <button className='px-2 py-1' onClick={() => handleSubmit()}>
         <Search />
       </button>
+    </div>
     </div>
   )
 }
