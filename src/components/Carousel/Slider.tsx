@@ -63,6 +63,14 @@ const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
     }
   }
 
+  const handleRedirect = (element:MovieData)=> {
+    if (element.media_type === 'tv') {
+      return navigate(`/tv/${element.id}`)
+    } else {
+      return navigate(`/movie/${element.id}`)
+    }
+  }
+
   return (
     <div className='pt-8'>
       <h1 className='mb-4 pl-8 font-sans font-medium'>{category}</h1>
@@ -81,7 +89,7 @@ const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
             {results.map((element, key) => (
               <SwiperSlide key={key}>
                 <Card
-                  handleRedirect={() => navigate(`/title/${element.id}`)}
+                  handleRedirect={() => handleRedirect(element)}
                   handleWatch={() => handleLikeMovie(element)}
                   src={handlePosterPath(element)}
                   alt={handleSetName(element)}

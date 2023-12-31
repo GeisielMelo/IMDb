@@ -44,7 +44,7 @@ const AppRoutes: React.FC = () => {
         <Route path={'/'} element={<Home />} />
         <Route path={'*'} element={<NotFound />} />
         <Route path={'/search'} element={<Search />} />
-        <Route path={'/serie/:id'} element={<Series />} />
+        <Route path={'/tv/:id'} element={<Series />} />
         <Route path={'/movie/:id'} element={<Movies />} />
         <Route path={'sign-in'} element={<Public><Login /></Public>}/>
         <Route path={'sign-up'} element={<Public><Register /></Public>}/>
