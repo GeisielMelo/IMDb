@@ -8,8 +8,8 @@ import Register from './pages/Sign/Register'
 import List from './pages/Main/List'
 import NotFound from './pages/Error/NotFound'
 import Search from './pages/Main/Search'
-import Serie from './pages/Main/Serie'
-import Movie from './pages/Main/Movie'
+import Series from './pages/Main/Series'
+import Movies from './pages/Main/Movies'
 
 type RoutesProps = {
   children: ReactNode
@@ -44,8 +44,8 @@ const AppRoutes: React.FC = () => {
         <Route path={'/'} element={<Home />} />
         <Route path={'*'} element={<NotFound />} />
         <Route path={'/search'} element={<Search />} />
-        <Route path={'/serie/:id'} element={<Serie />} />
-        <Route path={'/movie/:id'} element={<Movie />} />
+        <Route path={'/serie/:id'} element={<Series />} />
+        <Route path={'/movie/:id'} element={<Movies />} />
         <Route path={'sign-in'} element={<Public><Login /></Public>}/>
         <Route path={'sign-up'} element={<Public><Register /></Public>}/>
         <Route path={'/my-list'} element={<Private><List /></Private>}/>

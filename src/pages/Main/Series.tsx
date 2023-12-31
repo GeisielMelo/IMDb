@@ -1,7 +1,7 @@
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
 
-const Movie:React.FC = () => {
+const Series: React.FC = () => {
   return (
     <>
       <Navigation />
@@ -11,4 +11,4 @@ const Movie:React.FC = () => {
   )
 }
 
-export default Movie
+export default Series
