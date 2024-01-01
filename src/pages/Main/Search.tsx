@@ -1,5 +1,4 @@
 import { useLocation } from 'react-router-dom'
-import { options } from '../../config/themoviedb'
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
 import Slider from '../../components/Carousel/Slider'
@@ -17,7 +16,9 @@ const Search = () => {
   return (
     <>
       <Navigation />
-      <section className='py-10'>{q && <Slider category={'Results'} url={formatUrl(q, 1)} options={options} />}</section>
+      <section className='py-10'>
+        {q && <Slider category={'Results'} url={formatUrl(q, 1)} />}
+      </section>
       <Footer fixed={true} />
     </>
   )

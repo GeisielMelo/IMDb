@@ -1,4 +1,3 @@
-import { useFetchData } from '../../hooks/useFetchData'
 import { useMovies } from '../../context/MovieContext'
 import { useNavigate } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -9,21 +8,21 @@ import { Prev, Next } from './Navigation'
 import { ImageSkeleton } from './Skeletons'
 import { Card } from './Card'
 import 'swiper/css'
+import { useFetchTMDB } from '../../hooks/useFetchTMDB'
 register()
 
 type SliderTypes = {
   category: string
   url: string
-  options?: object
 }
 
 type ResultTypes = {
   results: MovieData[]
 }
 
-const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
+const Slider: React.FC<SliderTypes> = ({ category, url }) => {
   const navigate = useNavigate()
-  const { data, loading, error } = useFetchData<ResultTypes>(url, options)
+  const { data, loading, error } = useFetchTMDB<ResultTypes>(url)
   const { movies, addMovie, removeMovie } = useMovies()
 
   if (error) navigate('/404')
@@ -63,7 +62,7 @@ const Slider: React.FC<SliderTypes> = ({ category, url, options }) => {
     }
   }
 
-  const handleRedirect = (element:MovieData)=> {
+  const handleRedirect = (element: MovieData) => {
     if (element.media_type === 'tv') {
       return navigate(`/tv/${element.id}`)
     } else {
