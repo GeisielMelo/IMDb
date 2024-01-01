@@ -1,7 +1,7 @@
 import { useFetchTMDB } from '../../hooks/useFetchTMDB'
 import { ReleaseSkeleton } from './Skeletons'
 
-type MovieProps = {
+type ReleaseProps = {
   id?: string
 }
 
@@ -19,7 +19,7 @@ type ReleaseData = {
   results: ReleaseTypes[]
 }
 
-export const MovieRelease: React.FC<MovieProps> = ({ id }) => {
+export const MovieRelease: React.FC<ReleaseProps> = ({ id }) => {
   const url = `https://api.themoviedb.org/3/movie/${id}/release_dates`
   const { data, loading, error } = useFetchTMDB<ReleaseData>(url)
 

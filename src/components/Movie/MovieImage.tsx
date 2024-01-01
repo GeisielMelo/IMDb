@@ -1,6 +1,10 @@
-import { MovieProps } from './Movie'
+import { Data } from './Movie'
 
-export const MovieImage: React.FC<MovieProps> = ({ data }) => {
+type ImageProps = {
+  data: Data
+}
+
+export const MovieImage: React.FC<ImageProps> = ({ data }) => {
   const url = 'https://image.tmdb.org/t/p/w500'
 
   return (

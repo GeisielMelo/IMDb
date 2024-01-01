@@ -1,8 +1,13 @@
 import { MovieRelease } from './MovieRelease'
 import { Plus } from 'lucide-react'
-import { MovieProps } from './Movie'
+import { Data } from './Movie'
 
-export const MovieInfo: React.FC<MovieProps> = ({ id, data }) => {
+type InfoProps = {
+  id?: string
+  data: Data
+}
+
+export const MovieInfo: React.FC<InfoProps> = ({ id, data }) => {
   return (
     <div className='flex flex-col justify-center px-8 gap-4'>
       <div>
