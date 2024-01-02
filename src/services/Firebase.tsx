@@ -1,11 +1,4 @@
-import {
-  doc,
-  setDoc,
-  collection,
-  serverTimestamp,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore'
+import { doc, setDoc, collection, serverTimestamp, getDoc, updateDoc } from 'firebase/firestore'
 import { database } from '../config/firebase'
 
 const collectionRef = collection(database, 'repos')
