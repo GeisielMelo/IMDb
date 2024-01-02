@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
   margin: 0;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 html {
