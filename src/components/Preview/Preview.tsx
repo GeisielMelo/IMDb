@@ -54,7 +54,11 @@ const Preview: React.FC<Data> = ({ setPreviewData, elementData }) => {
   return (
     <div className='fixed top-0 flex justify-center items-center h-[100dvh] w-screen z-30 backdrop-blur-md px-4'>
       <div className='relative max-w-[560px] md:max-w-[700px] md:flex p-8 rounded-lg shadow bg-white'>
-        <Image backdrop={handlePosterPath(elementData.backdrop_path)} poster={handlePosterPath(elementData.poster_path)} alt={handleSetName(elementData)} />
+        <Image
+          backdrop={handlePosterPath(elementData.backdrop_path)}
+          poster={handlePosterPath(elementData.poster_path)}
+          alt={handleSetName(elementData)}
+        />
         <Info
           title={handleSetName(elementData)}
           year={handleFormatToYear(elementData.release_date ?? elementData.first_air_date ?? '')}
@@ -63,7 +67,10 @@ const Preview: React.FC<Data> = ({ setPreviewData, elementData }) => {
           onLike={() => handleLikeMovie()}
           added={handleAlreadyAdded()}
         />
-        <button className='absolute w-4 h-4 top-2 right-2 rounded-[50%] text-sm bg-red-600' onClick={() => setPreviewData(null)} />
+        <button
+          className='absolute w-4 h-4 top-2 right-2 rounded-[50%] text-sm bg-red-600'
+          onClick={() => setPreviewData(null)}
+        />
         <iframe width='420' height='315' src='https://www.youtube.com/embed/eI4an8aSsgw'></iframe>
       </div>
     </div>
