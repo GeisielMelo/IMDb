@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
 interface CircularProgressBarProps {
-  progressPercentage: number;
-  animationDuration: number;
+  progressPercentage: number
 }
 
-const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progressPercentage, animationDuration }) => {
+const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progressPercentage }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progressPerce
       }
 
       const progressTime = timestamp - startTime;
-      const progressRatio = Math.min(progressTime / animationDuration, 1);
+      const progressRatio = Math.min(progressTime / 600, 1);
       currentAngle = startAngle + progressRatio * progress;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -53,8 +52,8 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progressPerce
       context.lineWidth = 8;
       context.stroke();
 
-      context.font = '17px Arial';
-      context.fillStyle = 'black';
+      context.font = '24px Arial';
+      context.fillStyle = 'white';
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText(`${progressPercentage}%`, centerX, centerY);
@@ -65,10 +64,10 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progressPerce
     };
 
     requestAnimationFrame(animate);
-  }, [progressPercentage, animationDuration]);
+  }, [progressPercentage]);
 
   return (
-    <div className='max-w-[100px] max-h-[100px]'>
+    <div className='max-w-[50px] max-h-[50px]'>
       <canvas ref={canvasRef} width={100} height={100} className='w-full h-full' />
     </div>
   );
