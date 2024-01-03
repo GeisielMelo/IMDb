@@ -18,6 +18,10 @@ html {
   overflow-y: scroll;
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 /* Custom scrollbar for Chromium */
 html::-webkit-scrollbar {
   width: 6px;
