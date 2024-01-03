@@ -44,9 +44,9 @@ const Series: React.FC = () => {
   return (
     <>
       <Navigation />
-      <section className='mt-16'>
+      <div className='mt-16'>
         <Title title={title} release={release} credits={credits} reviews={reviews} similar={similar} videos={videos} />
-      </section>
+      </div>
       <Footer />
     </>
   )
