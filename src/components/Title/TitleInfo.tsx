@@ -1,15 +1,20 @@
-import CircularProgressBar from '../animated/CircularProgressBar'
+import { useState } from 'react'
 import { TitleRelease } from './TitleRelease'
 import { Plus, Youtube } from 'lucide-react'
 import { TitleData } from './types/TitleData'
+import { VideosData } from './types/VideosData'
 import { ReleaseData } from './types/ReleaseData'
+import YouTubePlayer from '../Modal/YouTubePlayer'
+import CircularProgressBar from '../animated/CircularProgressBar'
 
 type InfoProps = {
   title: TitleData
   release: ReleaseData
+  videos: VideosData
 }
 
-export const TitleInfo: React.FC<InfoProps> = ({ title, release }) => {
+export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
+  const [showPlayer, setShowPlayer] = useState<boolean>(false)
   const handleGetReleaseYear = (element: TitleData) => {
     const date = element.first_air_date || element.release_date
 
@@ -37,6 +42,13 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release }) => {
     else return 'Movie'
   }
 
+  const handleGetRandomTrailerKey = (element: VideosData) => {
+    const trailers = element.results.filter((_) => _.type === 'Trailer' && _.official)
+    const randomIndex = Math.floor(Math.random() * trailers.length)
+    const randomTrailer = trailers[randomIndex]
+    return randomTrailer.key
+  }
+
   return (
     <div className='flex flex-col justify-center px-8 gap-4'>
       <div>
@@ -54,12 +66,17 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release }) => {
 
       <div className='flex gap-2 items-center'>
         <div>
-          <CircularProgressBar progressPercentage={handleVoteAverageToPercent(title.vote_average)} />
+          <CircularProgressBar
+            progressPercentage={handleVoteAverageToPercent(title.vote_average)}
+          />
         </div>
         <button className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'>
           <Plus className='h-4' />
         </button>
-        <button className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'>
+        <button
+          className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'
+          onClick={() => setShowPlayer(true)}
+        >
           <Youtube className='h-4' />
         </button>
       </div>
@@ -67,6 +84,13 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release }) => {
       <p className='font-normal text-[1.1rem] italic opacity-70 text-white'>{title.tagline}</p>
       <p className='text-white'>{title.overview}</p>
       {release && <TitleRelease release={release} />}
+      {showPlayer && (
+        <YouTubePlayer
+          title={handleSetTitle(title)}
+          url={handleGetRandomTrailerKey(videos)}
+          onClose={() => setShowPlayer(!showPlayer)}
+        />
+      )}
     </div>
   )
 }
