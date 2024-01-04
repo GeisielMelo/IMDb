@@ -31,7 +31,7 @@ const Navigation: React.FC = () => {
   }
 
   return (
-    <nav className='fixed top-0 w-full z-20 bg-white'>
+    <nav className='w-full bg-white'>
       <div className='flex justify-between items-center py-4 px-6 md:px-8 shadow-md'>
         <div className='flex items-center gap-6'>
           <img className='h-8 cursor-pointer' src={logo} onClick={() => navigate('/')} alt='Logo' />
