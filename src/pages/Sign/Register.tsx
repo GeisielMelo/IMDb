@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
 
 type AuthError = {
@@ -42,11 +41,12 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <Navigation />
-
       <section className='flex h-[100dvh] justify-center items-center'>
         <div className='max-w-[400px] w-full shadow-custom rounded-md text-center'>
-          <form className='flex flex-col justify-center items-center gap-4 px-8  w-full ' onSubmit={handleSubmit}>
+          <form
+            className='flex flex-col justify-center items-center gap-4 px-8  w-full '
+            onSubmit={handleSubmit}
+          >
             <h1 className='mt-8'>Sign Up</h1>
             {error && <p>Error: {error}</p>}
             <input
@@ -77,7 +77,11 @@ const Register: React.FC = () => {
               onChange={(e) => setData({ ...data, passB: e.target.value })}
             />
 
-            <button className='w-full border border-slate-400 py-2 rounded-lg' disabled={loading} type='submit'>
+            <button
+              className='w-full border border-slate-400 py-2 rounded-lg'
+              disabled={loading}
+              type='submit'
+            >
               Submit
             </button>
           </form>
@@ -89,7 +93,7 @@ const Register: React.FC = () => {
           </p>
         </div>
       </section>
-      <Footer fixed={true} />
+      <Footer />
     </>
   )
 }

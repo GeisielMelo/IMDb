@@ -21,7 +21,7 @@ const List: React.FC = () => {
   return (
     <>
       <Navigation />
-      <section>
+      <section className='min-h-screen'>
         {movies.length ? (
           <>
             {!!movieList.length && <ListSlider category='Movies' data={movieList} loading={loading} />}
@@ -39,7 +39,7 @@ const List: React.FC = () => {
           </>
         )}
       </section>
-      <Footer />
+      <Footer/>
     </>
   )
 }

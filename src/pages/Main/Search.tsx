@@ -16,10 +16,10 @@ const Search = () => {
   return (
     <>
       <Navigation />
-      <section className='py-10'>
+      <section className='min-h-screen'>
         {q && <Slider category={'Results'} url={formatUrl(q, 1)} />}
       </section>
-      <Footer fixed={true} />
+      <Footer/>
     </>
   )
 }

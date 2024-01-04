@@ -1,20 +1,34 @@
 import React from 'react'
+import { Linkedin, Github } from 'lucide-react'
 
-type IFooter = {
-  fixed?: boolean
-}
-
-const Footer: React.FC<IFooter> = ({fixed = false}) => {
+const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className={`${fixed && 'fixed bottom-0 w-full'} flex items-center justify-center mt-4`}>
-      <p className='p-6 text-center'>
-        &copy; {currentYear}{' '}
-        <a href='https://github.com/GeisielMelo' target='_blank'>
-          GeisielMelo
-        </a>
-      </p>
+    <footer className='flex flex-col items-center justify-center pt-8 pb-4 gap-4 bg-black text-white'>
+      <div className='flex flex-wrap gap-4'>
+        <button
+          className='p-2'
+          onClick={() => window.open('https://github.com/GeisielMelo', '_blank')}
+        >
+          <Github />
+        </button>
+        <button
+          className='p-2'
+          onClick={() => window.open('https://www.linkedin.com/in/geisiel', '_blank')}
+        >
+          <Linkedin />
+        </button>
+      </div>
+      <ul className='flex flex-wrap gap-4 items-center justify-center'>
+        <li> Privacy Policy </li>
+        <li>|</li>
+        <li>Terms and Policies </li>
+        <li>|</li>
+        <li>Accessibility</li>
+      </ul>
+      <p>© 2023-{currentYear} by GeisielMelo.</p>
+      <p className='text-xs text-zinc-700'>v1.0</p>
     </footer>
   )
 }
