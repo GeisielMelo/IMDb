@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ReviewsData } from './types/ReviewsData'
+import { ReviewsData } from '../../types/ReviewsData'
 
 type ReviewProps = {
   review: string

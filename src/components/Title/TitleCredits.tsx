@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CreditsData } from './types/CreditsData'
+import { CreditsData } from '../../types/CreditsData'
 
 type CreditsProps = {
   credits: CreditsData

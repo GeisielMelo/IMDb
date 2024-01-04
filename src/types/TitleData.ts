@@ -1,5 +1,6 @@
 
 export type TitleData = {
+  success: boolean
   genres: { [key: string]: string }[]
   original_title: string
   name: string

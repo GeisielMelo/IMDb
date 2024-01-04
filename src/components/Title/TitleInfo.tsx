@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { TitleRelease } from './TitleRelease'
 import { Plus, Youtube } from 'lucide-react'
-import { TitleData } from './types/TitleData'
-import { VideosData } from './types/VideosData'
-import { ReleaseData } from './types/ReleaseData'
+import { TitleData } from '../../types/TitleData'
+import { VideosData } from '../../types/VideosData'
+import { ReleaseData } from '../../types/ReleaseData'
 import YouTubePlayer from '../Modal/YouTubePlayer'
 import CircularProgressBar from '../animated/CircularProgressBar'
 
@@ -15,9 +15,9 @@ type InfoProps = {
 
 export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
   const [showPlayer, setShowPlayer] = useState<boolean>(false)
+
   const handleGetReleaseYear = (element: TitleData) => {
     const date = element.first_air_date || element.release_date
-
     if (!date) return ''
     const year = date.split('-')[0]
     return `(${year})`
@@ -42,11 +42,19 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
     else return 'Movie'
   }
 
-  const handleGetRandomTrailerKey = (element: VideosData) => {
+  const handleGetVideoKey = (element: VideosData) => {
     const trailers = element.results.filter((_) => _.type === 'Trailer' && _.official)
-    const randomIndex = Math.floor(Math.random() * trailers.length)
-    const randomTrailer = trailers[randomIndex]
-    return randomTrailer.key
+    const teasers = element.results.filter((_) => _.type === 'Teaser' && _.official)
+
+    if (trailers.length) {
+      const randomIndex = Math.floor(Math.random() * trailers.length)
+      const randomTrailer = trailers[randomIndex]
+      return randomTrailer.key
+    } else {
+      const randomIndex = Math.floor(Math.random() * teasers.length)
+      const randomTeaser = teasers[randomIndex]
+      return randomTeaser.key
+    }
   }
 
   return (
@@ -76,6 +84,7 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
         <button
           className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'
           onClick={() => setShowPlayer(true)}
+          disabled={!!videos.results}
         >
           <Youtube className='h-4' />
         </button>
@@ -87,7 +96,7 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
       {showPlayer && (
         <YouTubePlayer
           title={handleSetTitle(title)}
-          url={handleGetRandomTrailerKey(videos)}
+          url={handleGetVideoKey(videos)}
           onClose={() => setShowPlayer(!showPlayer)}
         />
       )}

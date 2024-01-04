@@ -1,4 +1,4 @@
-import { ReleaseData } from './types/ReleaseData'
+import { ReleaseData } from '../../types/ReleaseData'
 
 type ReleaseProps = {
   release: ReleaseData

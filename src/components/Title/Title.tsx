@@ -2,28 +2,38 @@ import TitleReviews from './TitleReviews'
 import TitleCredits from './TitleCredits'
 import { TitleImage } from './TitleImage'
 import { TitleInfo } from './TitleInfo'
-import { TitleData } from './types/TitleData'
-import { ReleaseData } from './types/ReleaseData'
-import { CreditsData } from './types/CreditsData'
-import { VideosData } from './types/VideosData'
-import { ReviewsData } from './types/ReviewsData'
+import { TitleData } from '../../types/TitleData'
+import { ReleaseData } from '../../types/ReleaseData'
+import { CreditsData } from '../../types/CreditsData'
+import { VideosData } from '../../types/VideosData'
+import { ReviewsData } from '../../types/ReviewsData'
+import { SimilarData } from '../../types/SimilarData'
+import ListSlider from '../Carousel/ListSlider'
 
 type TitleProps = {
   title: TitleData
   release: ReleaseData
   credits: CreditsData
   reviews: ReviewsData
-  similar: object
+  similar: SimilarData
   videos: VideosData
+  loading: boolean
 }
 
-const Title: React.FC<TitleProps> = ({ title, release, credits, reviews, similar, videos }) => {
-  console.log(similar)
+const Title: React.FC<TitleProps> = ({
+  title,
+  release,
+  credits,
+  reviews,
+  similar,
+  videos,
+  loading,
+}) => {
 
   const bgUrl = 'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces'
   return (
     <>
-      <section className='mt-16'>
+      <section>
         <div
           className='flex justify-center py-8 px-8 bg-no-repeat bg-cover'
           style={{
@@ -44,12 +54,22 @@ const Title: React.FC<TitleProps> = ({ title, release, credits, reviews, similar
         </div>
       </section>
 
-      <section className='flex justify-center p-8'>
-        <TitleCredits credits={credits} />
-      </section>
+      {!!credits.cast.length && (
+        <section className='flex justify-center p-8'>
+          <TitleCredits credits={credits} />
+        </section>
+      )}
 
-      <section className='flex justify-center p-8'>
-        <TitleReviews reviews={reviews} />
+      {!!reviews.results.length && (
+        <section className='flex justify-center p-8'>
+          <TitleReviews reviews={reviews} />
+        </section>
+      )}
+
+      <section className='flex item-center justify-center'>
+        <div className='max-w-5xl w-full my-4'>
+          <ListSlider category='Similar' data={similar.results} loading={loading} />
+        </div>
       </section>
     </>
   )

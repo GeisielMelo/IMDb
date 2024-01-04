@@ -1,4 +1,4 @@
-import { TitleData } from './types/TitleData'
+import { TitleData } from '../../types/TitleData'
 
 type ImageProps = {
   title: TitleData
