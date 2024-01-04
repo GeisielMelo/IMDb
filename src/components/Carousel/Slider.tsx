@@ -71,8 +71,8 @@ const Slider: React.FC<SliderTypes> = ({ category, url }) => {
   }
 
   return (
-    <div className='pt-8'>
-      <h1 className='mb-4 pl-8 font-sans font-medium'>{category}</h1>
+    <div className='my-8'>
+      <h1 className='pl-8 font-sans font-medium'>{category}</h1>
       <Swiper {...params} className='px-8 relative flex'>
         <Prev />
         {loading ? (

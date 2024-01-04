@@ -31,25 +31,36 @@ const Navigation: React.FC = () => {
   }
 
   return (
-    <nav className='w-full bg-white'>
-      <div className='flex justify-between items-center py-4 px-6 md:px-8 shadow-md'>
-        <div className='flex items-center gap-6'>
-          <img className='h-8 cursor-pointer' src={logo} onClick={() => navigate('/')} alt='Logo' />
-          <NavigationFlex />
-        </div>
+    <nav className='flex items-center justify-center w-full bg-black text-white'>
+      <div className='max-w-7xl w-full'>
+        <div className='flex justify-between items-center py-4 px-8'>
+          <div className='flex items-center gap-6'>
+            <img
+              className='h-8 cursor-pointer'
+              src={logo}
+              onClick={() => navigate('/')}
+              alt='Logo'
+            />
+            <NavigationFlex />
+          </div>
 
-        <div className='flex gap-6'>
-          {user ? (
-            <button onClick={() => handleLogOut()}><LogOut /></button>
-          ) : (
-            <button onClick={() => navigate('/sign-in')}>Login</button>
-          )}
-          <button onClick={() => handleOpenSearch()}>{isSearchOpen ? <X /> : <Search />}</button>
-          <button className='block md:hidden' onClick={() => handleOpenMenu()}><Menu /></button>
+          <div className='flex gap-6'>
+            {user ? (
+              <button onClick={() => handleLogOut()}>
+                <LogOut />
+              </button>
+            ) : (
+              <button onClick={() => navigate('/sign-in')}>Login</button>
+            )}
+            <button onClick={() => handleOpenSearch()}>{isSearchOpen ? <X /> : <Search />}</button>
+            <button className='block md:hidden' onClick={() => handleOpenMenu()}>
+              <Menu />
+            </button>
+          </div>
         </div>
+        {isMenuOpen && <NavigationBox />}
+        {isSearchOpen && <SearchBar />}
       </div>
-      {isMenuOpen && <NavigationBox />}
-      {isSearchOpen && <SearchBar />}
     </nav>
   )
 }

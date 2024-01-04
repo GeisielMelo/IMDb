@@ -17,8 +17,8 @@ export const SearchBar: React.FC = () => {
   }
 
   return (
-    <div className='absolute w-full px-8 py-4 mt-2 bg-white'>
-    <div className='flex w-full border border-blue-950'>
+    <div className='absolute px-8 py-4 max-w-7xl w-full bg-white text-black'>
+    <div className='flex border border-blue-950'>
       <input
         className='px-2 w-full outline-none focus:outline-none'
         value={params}

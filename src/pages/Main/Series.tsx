@@ -3,11 +3,11 @@ import Title from '../../components/Title/Title'
 import Footer from '../../components/Footer/Footer'
 import { useParams } from 'react-router-dom'
 import { useFetchTMDB } from '../../hooks/useFetchTMDB'
-import { ReleaseData } from '../../components/Title/types/ReleaseData'
-import { TitleData } from '../../components/Title/types/TitleData'
-import { CreditsData } from '../../components/Title/types/CreditsData'
-import { ReviewsData } from '../../components/Title/types/ReviewsData'
-import { VideosData } from '../../components/Title/types/VideosData'
+import { ReleaseData } from '../../types/ReleaseData'
+import { TitleData } from '../../types/TitleData'
+import { CreditsData } from '../../types/CreditsData'
+import { ReviewsData } from '../../types/ReviewsData'
+import { VideosData } from '../../types/VideosData'
 
 type IParams = {
   id?: string

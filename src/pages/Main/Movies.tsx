@@ -3,11 +3,12 @@ import Title from '../../components/Title/Title'
 import Footer from '../../components/Footer/Footer'
 import { useParams } from 'react-router-dom'
 import { useFetchTMDB } from '../../hooks/useFetchTMDB'
-import { ReleaseData } from '../../components/Title/types/ReleaseData'
-import { TitleData } from '../../components/Title/types/TitleData'
-import { CreditsData } from '../../components/Title/types/CreditsData'
-import { ReviewsData } from '../../components/Title/types/ReviewsData'
-import { VideosData } from '../../components/Title/types/VideosData'
+import { ReleaseData } from '../../types/ReleaseData'
+import { TitleData } from '../../types/TitleData'
+import { CreditsData } from '../../types/CreditsData'
+import { ReviewsData } from '../../types/ReviewsData'
+import { VideosData } from '../../types/VideosData'
+import { SimilarData } from '../../types/SimilarData'
 
 type IParams = {
   id?: string
@@ -51,21 +52,22 @@ const Movies: React.FC = () => {
     data: similar,
     loading: similarLoading,
     error: similarError,
-  } = useFetchTMDB<object>(urls.similar)
+  } = useFetchTMDB<SimilarData>(urls.similar)
   const {
     data: videos,
     loading: videosLoading,
     error: videosError,
   } = useFetchTMDB<VideosData>(urls.videos)
 
-  if (
+  const loading =
     titleLoading ||
     releaseLoading ||
     creditsLoading ||
     reviewsLoading ||
     similarLoading ||
     videosLoading
-  ) {
+
+  if (loading) {
     return <>Loading</>
   }
 
@@ -74,6 +76,10 @@ const Movies: React.FC = () => {
   }
 
   if (!title || !release || !credits || !reviews || !similar || !videos) return null
+
+  // if (!title.success) {
+  //   return <>Not Found</>
+  // }
 
   return (
     <>
@@ -86,6 +92,7 @@ const Movies: React.FC = () => {
           reviews={reviews}
           similar={similar}
           videos={videos}
+          loading={loading}
         />
         <Footer />
       </>

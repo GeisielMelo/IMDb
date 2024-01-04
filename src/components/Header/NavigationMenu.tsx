@@ -4,7 +4,6 @@ import { useAuth } from '../../context/AuthContext'
 const menu = [
   { option: 'Movies', url: '' },
   { option: 'TV Show', url: '' },
-  { option: 'People', url: '' },
 ]
 
 export const NavigationFlex: React.FC = () => {

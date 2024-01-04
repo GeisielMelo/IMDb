@@ -13,12 +13,14 @@ const Home: React.FC = () => {
   return (
     <>
       <Navigation />
-        <div className='min-h-screen pb-8'>
+      <section className='min-h-screen flex item-center justify-center'>
+        <div className='max-w-7xl w-full my-2'>
           <Slider category={'Trending'} url={trending} />
-          <Slider category={'Upcoming'} url={upcoming} /> 
+          <Slider category={'Upcoming'} url={upcoming} />
           <Slider category={'Movies'} url={movies} />
           <Slider category={'Tv Show'} url={tvShow} />
         </div>
+      </section>
       <Footer />
     </>
   )
