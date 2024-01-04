@@ -27,7 +27,7 @@ export const Card: React.FC<Card> = ({ handleRedirect, handleWatch, src, alt, ti
         </div>
       </div>
 
-      <div className='mx-1'>
+      <div className='mx-1 mb-2'>
         <div className='flex items-center py-1'>
           <h1 className='text-sm'>{note}</h1>
           <Star className='h-4' />
