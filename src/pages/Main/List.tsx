@@ -22,26 +22,32 @@ const List: React.FC = () => {
     <>
       <Navigation />
       <section className='min-h-screen flex item-center justify-center'>
-      <div className='max-w-7xl w-full my-2'>
-        {movies.length ? (
-          <>
-            {!!movieList.length && <ListSlider category='Movies' data={movieList} loading={loading} />}
-            {!!serieList.length && <ListSlider category='Series' data={serieList} loading={loading} />}
-            {!!otherList.length && <ListSlider category='Others' data={otherList} loading={loading} />}
-          </>
-        ) : (
-          <>
-            <h1 className='text-center p-8'>
-              Your list is empty,{' '}
-              <span className='cursor-pointer underline' onClick={() => navigate('/')}>
-                return to home.
-              </span>
-            </h1>
-          </>
-        )}
+        <div className='max-w-7xl w-full my-2'>
+          {movies.length ? (
+            <>
+              {!!movieList.length && (
+                <ListSlider category='Movies' data={movieList} loading={loading} watchList={true} />
+              )}
+              {!!serieList.length && (
+                <ListSlider category='Series' data={serieList} loading={loading} watchList={true} />
+              )}
+              {!!otherList.length && (
+                <ListSlider category='Search' data={otherList} loading={loading} watchList={true} />
+              )}
+            </>
+          ) : (
+            <>
+              <h1 className='text-center p-8'>
+                Your list is empty,{' '}
+                <span className='cursor-pointer underline' onClick={() => navigate('/')}>
+                  return to home.
+                </span>
+              </h1>
+            </>
+          )}
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </>
   )
 }
