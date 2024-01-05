@@ -16,5 +16,6 @@ export type MovieData = {
   vote_average: number
   vote_count: number
   popularity: number
+  tagline: string
   id: number
 }
