@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
-const List: React.FC = () => {
+const NotFound: React.FC = () => {
   const navigate = useNavigate()
   return (
-    <section className='flex h-[100dvh] justify-center items-center'>
+    <section className='flex min-h-[100dvh] justify-center items-center'>
       <div>
         <h1>404</h1>
         <h2>Page Not Found</h2>
@@ -15,4 +15,4 @@ const List: React.FC = () => {
   )
 }
 
-export default List
+export default NotFound
