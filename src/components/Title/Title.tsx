@@ -20,16 +20,7 @@ type TitleProps = {
   loading: boolean
 }
 
-const Title: React.FC<TitleProps> = ({
-  title,
-  release,
-  credits,
-  reviews,
-  similar,
-  videos,
-  loading,
-}) => {
-
+const Title: React.FC<TitleProps> = ({ title, release, credits, reviews, similar, videos, loading }) => {
   const bgUrl = 'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces'
   return (
     <>
@@ -37,9 +28,7 @@ const Title: React.FC<TitleProps> = ({
         <div
           className='flex justify-center py-8 px-8 bg-no-repeat bg-cover'
           style={{
-            backgroundImage: `linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84)), url(${
-              bgUrl + title.backdrop_path
-            })`,
+            backgroundImage: `linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84)), url(${bgUrl + title.backdrop_path})`,
           }}
         >
           <div className='max-w-5xl max-h-[510px] w-full flex'>
@@ -54,6 +43,12 @@ const Title: React.FC<TitleProps> = ({
         </div>
       </section>
 
+      <section className='flex item-center justify-center'>
+        <div className='max-w-5xl w-full my-4'>
+          <ListSlider category='Similar' data={similar.results} loading={loading} watchList={false} />
+        </div>
+      </section>
+
       {!!credits.cast.length && (
         <section className='flex justify-center p-8'>
           <TitleCredits credits={credits} />
@@ -65,12 +60,6 @@ const Title: React.FC<TitleProps> = ({
           <TitleReviews reviews={reviews} />
         </section>
       )}
-
-      <section className='flex item-center justify-center'>
-        <div className='max-w-5xl w-full my-4'>
-          <ListSlider category='Similar' data={similar.results} loading={loading} />
-        </div>
-      </section>
     </>
   )
 }
