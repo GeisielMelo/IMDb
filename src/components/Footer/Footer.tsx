@@ -7,16 +7,10 @@ const Footer: React.FC = () => {
   return (
     <footer className='flex flex-col items-center justify-center pt-8 pb-4 gap-4 bg-black text-white'>
       <div className='flex flex-wrap gap-4'>
-        <button
-          className='p-2'
-          onClick={() => window.open('https://github.com/GeisielMelo', '_blank')}
-        >
+        <button className='p-2' onClick={() => window.open('https://github.com/GeisielMelo', '_blank')}>
           <Github />
         </button>
-        <button
-          className='p-2'
-          onClick={() => window.open('https://www.linkedin.com/in/geisiel', '_blank')}
-        >
+        <button className='p-2' onClick={() => window.open('https://www.linkedin.com/in/geisiel', '_blank')}>
           <Linkedin />
         </button>
       </div>
@@ -28,7 +22,7 @@ const Footer: React.FC = () => {
         <li>Accessibility</li>
       </ul>
       <p>© 2023-{currentYear} by GeisielMelo.</p>
-      <p className='text-xs text-zinc-700'>v1.0</p>
+      <p className='text-xs text-zinc-700'>{'release-1.0(alpha)'}</p>
     </footer>
   )
 }
