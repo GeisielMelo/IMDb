@@ -18,19 +18,19 @@ export const SearchBar: React.FC = () => {
 
   return (
     <div className='absolute px-8 py-4 max-w-7xl w-full bg-white text-black'>
-    <div className='flex border border-blue-950'>
-      <input
-        className='px-2 w-full outline-none focus:outline-none'
-        value={params}
-        onChange={(e) => setParams(e.target.value)}
-        type='text'
-        placeholder='Search...'
-        onKeyDown={handleKeyDown}
-      />
-      <button className='px-2 py-1' onClick={() => handleSubmit()}>
-        <Search />
-      </button>
-    </div>
+      <div className='flex border border-blue-950'>
+        <input
+          className='px-2 w-full outline-none focus:outline-none'
+          value={params}
+          onChange={(e) => setParams(e.target.value)}
+          type='text'
+          placeholder='Search...'
+          onKeyDown={handleKeyDown}
+        />
+        <button className='px-2 py-1' onClick={() => handleSubmit()}>
+          <Search />
+        </button>
+      </div>
     </div>
   )
 }
