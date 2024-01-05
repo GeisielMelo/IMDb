@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useMovies } from '../../context/MovieContext'
 import { TitleRelease } from './TitleRelease'
-import { Plus, Youtube } from 'lucide-react'
+import { Plus, Minus, Youtube } from 'lucide-react'
 import { TitleData } from '../../types/TitleData'
 import { VideosData } from '../../types/VideosData'
 import { ReleaseData } from '../../types/ReleaseData'
+import { MovieData } from '../../types/MovieData'
 import YouTubePlayer from '../Modal/YouTubePlayer'
 import CircularProgressBar from '../animated/CircularProgressBar'
 
@@ -15,6 +17,9 @@ type InfoProps = {
 
 export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
   const [showPlayer, setShowPlayer] = useState<boolean>(false)
+  const { movies, addMovie, removeMovie } = useMovies()
+  const alreadyAdded = movies.some((_) => _.id === title.id)
+  const titleCopy: MovieData = title
 
   const handleGetReleaseYear = (element: TitleData) => {
     const date = element.first_air_date || element.release_date
@@ -57,6 +62,18 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
     }
   }
 
+  const handleHasVideo = (element: VideosData) => {
+    const trailers = element.results.filter((_) => _.type === 'Trailer' && _.official)
+    const teasers = element.results.filter((_) => _.type === 'Teaser' && _.official)
+    const hasTrailers = !!trailers.length
+    const hasTeasers = !!teasers.length
+
+    if (hasTrailers || hasTeasers) {
+      return true
+    }
+    return false
+  }
+
   return (
     <div className='flex flex-col justify-center px-8 gap-4'>
       <div>
@@ -74,17 +91,23 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
 
       <div className='flex gap-2 items-center'>
         <div>
-          <CircularProgressBar
-            progressPercentage={handleVoteAverageToPercent(title.vote_average)}
-          />
+          <CircularProgressBar progressPercentage={handleVoteAverageToPercent(title.vote_average)} />
         </div>
-        <button className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'>
-          <Plus className='h-4' />
-        </button>
+
+        {alreadyAdded ? (
+          <button className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]' onClick={() => removeMovie(titleCopy)}>
+            <Minus className='h-4' />
+          </button>
+        ) : (
+          <button className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]' onClick={() => addMovie(titleCopy)}>
+            <Plus className='h-4' />
+          </button>
+        )}
+
         <button
           className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'
           onClick={() => setShowPlayer(true)}
-          disabled={!!videos.results}
+          disabled={!handleHasVideo(videos)}
         >
           <Youtube className='h-4' />
         </button>
@@ -93,13 +116,7 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
       <p className='font-normal text-[1.1rem] italic opacity-70 text-white'>{title.tagline}</p>
       <p className='text-white'>{title.overview}</p>
       {release && <TitleRelease release={release} />}
-      {showPlayer && (
-        <YouTubePlayer
-          title={handleSetTitle(title)}
-          url={handleGetVideoKey(videos)}
-          onClose={() => setShowPlayer(!showPlayer)}
-        />
-      )}
+      {showPlayer && <YouTubePlayer title={handleSetTitle(title)} url={handleGetVideoKey(videos)} onClose={() => setShowPlayer(!showPlayer)} />}
     </div>
   )
 }
