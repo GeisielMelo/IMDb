@@ -35,12 +35,7 @@ const Navigation: React.FC = () => {
       <div className='max-w-7xl w-full'>
         <div className='flex justify-between items-center py-4 px-8'>
           <div className='flex items-center gap-6'>
-            <img
-              className='h-8 cursor-pointer'
-              src={logo}
-              onClick={() => navigate('/')}
-              alt='Logo'
-            />
+            <img className='h-8 cursor-pointer' src={logo} onClick={() => navigate('/')} alt='Logo' />
             <NavigationFlex />
           </div>
 
