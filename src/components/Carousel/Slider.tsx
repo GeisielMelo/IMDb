@@ -95,6 +95,7 @@ const Slider: React.FC<SliderTypes> = ({ category, url }) => {
                   title={handleSetName(element)}
                   note={handleFormatVoteAverage(element)}
                   added={handleAlreadyAdded(element)}
+                  watchList={true}
                 />
               </SwiperSlide>
             ))}
