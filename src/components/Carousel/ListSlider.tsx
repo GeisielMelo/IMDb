@@ -7,17 +7,24 @@ import { Prev, Next } from './Navigation'
 import { ImageSkeleton } from './Skeletons'
 import { Card } from './Card'
 import 'swiper/css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 register()
 
 type SliderTypes = {
   category: string
   data: MovieData[]
   loading: boolean
+  watchList: boolean
 }
 
-const ListSlider: React.FC<SliderTypes> = ({ category, data, loading }) => {
+type IParams = {
+  id?: string
+  type?: string
+}
+
+const ListSlider: React.FC<SliderTypes> = ({ category, data, loading, watchList }) => {
   const navigate = useNavigate()
+  const q = useParams<IParams>()
   const { movies, addMovie, removeMovie } = useMovies()
 
   const handlePosterPath = (element: MovieData): string => {
@@ -27,7 +34,7 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data, loading }) => {
     return path ? url : notFoundUrl
   }
 
-  const handleFormatVoteAverage = (element:MovieData): string => {
+  const handleFormatVoteAverage = (element: MovieData): string => {
     if (element.vote_average === 0) return 'Upcoming'
     else return Number(element.vote_average).toPrecision(2)
   }
@@ -53,11 +60,19 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data, loading }) => {
     }
   }
 
-  const handleRedirect = (element:MovieData)=> {
-    if (element.media_type === 'tv') {
-      return navigate(`/tv/${element.id}`)
+  const handleRedirect = (element: MovieData) => {
+    if (element.media_type) {
+      if (element.media_type === 'tv') {
+        return navigate(`/tv/${element.id}`)
+      } else {
+        return navigate(`/movie/${element.id}`)
+      }
     } else {
-      return navigate(`/movie/${element.id}`)
+      if (q.type === 'tv') {
+        return navigate(`/tv/${element.id}`)
+      } else {
+        return navigate(`/movie/${element.id}`)
+      }
     }
   }
 
@@ -86,6 +101,7 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data, loading }) => {
                   title={handleSetName(element)}
                   note={handleFormatVoteAverage(element)}
                   added={handleAlreadyAdded(element)}
+                  watchList={watchList}
                 />
               </SwiperSlide>
             ))}
