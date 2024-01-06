@@ -1,5 +1,9 @@
 > **Note**: All information present on this app is gathered from 'TheMovieDB'.
 
+# IMDb
+
+An app created in my free time with the aim of being a front-end-only application powered by data from TheMovieDB. It was designed to be a user-friendly platform where you can effortlessly search for movie and series information.
+
 ## Deploy
 
 [Demo](https://imdb-omega-olive.vercel.app/) hosted with Vercel. 
