@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { useDisplayAlert } from '../../hooks/useDisplayAlert'
 import Footer from '../../components/Footer/Footer'
 
 type AuthError = {
@@ -10,29 +11,32 @@ type AuthError = {
 const Register: React.FC = () => {
   const navigate = useNavigate()
   const { signUp } = useAuth()
+  const { Alert, displayAlert } = useDisplayAlert()
   const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState('')
   const [data, setData] = useState({ email: '', passA: '', passB: '' })
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     try {
-      setError('')
       setLoading(true)
 
+      if (!data.email) {
+        return displayAlert('Please enter a valid email address.', 'info')
+      }
+
       if (data.passA.length <= 5) {
-        return setError('Password should be at least 6 characters.')
+        return displayAlert('Password should be at least 6 characters.', 'info')
       }
 
       if (data.passA != data.passB) {
-        return setError('Password do not match.')
+        return displayAlert('Password do not match.', 'warning')
       }
 
       await signUp(data.email, data.passA)
       navigate('/')
     } catch (error) {
       if ((error as AuthError).code == 'auth/email-already-in-use') {
-        return setError('Email already taken.')
+        return displayAlert('Email already taken.', 'error')
       }
     } finally {
       setLoading(false)
@@ -43,12 +47,8 @@ const Register: React.FC = () => {
     <>
       <section className='flex h-[100dvh] justify-center items-center'>
         <div className='max-w-[400px] w-full shadow-custom rounded-md text-center'>
-          <form
-            className='flex flex-col justify-center items-center gap-4 px-8  w-full '
-            onSubmit={handleSubmit}
-          >
+          <form className='flex flex-col justify-center items-center gap-4 px-8  w-full ' onSubmit={handleSubmit}>
             <h1 className='mt-8'>Sign Up</h1>
-            {error && <p>Error: {error}</p>}
             <input
               className='px-2 py-1 w-full border border-slate-400 rounded-lg'
               type='email'
@@ -77,11 +77,7 @@ const Register: React.FC = () => {
               onChange={(e) => setData({ ...data, passB: e.target.value })}
             />
 
-            <button
-              className='w-full border border-slate-400 py-2 rounded-lg'
-              disabled={loading}
-              type='submit'
-            >
+            <button className='w-full border border-slate-400 py-2 rounded-lg' disabled={loading} type='submit'>
               Submit
             </button>
           </form>
@@ -93,6 +89,7 @@ const Register: React.FC = () => {
           </p>
         </div>
       </section>
+      <Alert />
       <Footer />
     </>
   )
