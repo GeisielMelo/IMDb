@@ -8,6 +8,8 @@ import { ImageSkeleton } from './Skeletons'
 import { Card } from './Card'
 import 'swiper/css'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useDisplayAlert } from '../../hooks/useDisplayAlert'
+import { useAuth } from '../../context/AuthContext'
 register()
 
 type SliderTypes = {
@@ -26,6 +28,8 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data, loading, watchList 
   const navigate = useNavigate()
   const q = useParams<IParams>()
   const { movies, addMovie, removeMovie } = useMovies()
+  const { Alert, displayAlert } = useDisplayAlert()
+  const { authenticated } = useAuth()
 
   const handlePosterPath = (element: MovieData): string => {
     const path = element.poster_path
@@ -51,13 +55,12 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data, loading, watchList 
   }
 
   const handleLikeMovie = (element: MovieData) => {
-    try {
-      const alreadyExists = handleAlreadyAdded(element)
-      alreadyExists ? removeMovie(element) : addMovie(element)
-    } catch (error) {
-      console.log(error)
-      alert((error as Error).message)
+    if (!authenticated) {
+      displayAlert('You must be connected to perform this action.', 'info')
     }
+
+    const alreadyExists = handleAlreadyAdded(element)
+    alreadyExists ? removeMovie(element) : addMovie(element)
   }
 
   const handleRedirect = (element: MovieData) => {
@@ -109,6 +112,7 @@ const ListSlider: React.FC<SliderTypes> = ({ category, data, loading, watchList 
         )}
         <Next />
       </Swiper>
+      <Alert />
     </div>
   )
 }

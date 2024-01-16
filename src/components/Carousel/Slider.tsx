@@ -9,6 +9,8 @@ import { ImageSkeleton } from './Skeletons'
 import { Card } from './Card'
 import 'swiper/css'
 import { useFetchTMDB } from '../../hooks/useFetchTMDB'
+import { useDisplayAlert } from '../../hooks/useDisplayAlert'
+import { useAuth } from '../../context/AuthContext'
 register()
 
 type SliderTypes = {
@@ -22,8 +24,10 @@ type ResultTypes = {
 
 const Slider: React.FC<SliderTypes> = ({ category, url }) => {
   const navigate = useNavigate()
+  const { Alert, displayAlert } = useDisplayAlert()
   const { data, loading, error } = useFetchTMDB<ResultTypes>(url)
   const { movies, addMovie, removeMovie } = useMovies()
+  const { authenticated } = useAuth()
 
   if (error) navigate('/404')
   if (!data || !Array.isArray(data.results)) return
@@ -53,13 +57,12 @@ const Slider: React.FC<SliderTypes> = ({ category, url }) => {
   }
 
   const handleLikeMovie = (element: MovieData) => {
-    try {
-      const alreadyExists = handleAlreadyAdded(element)
-      alreadyExists ? removeMovie(element) : addMovie(element)
-    } catch (error) {
-      console.log(error)
-      alert((error as Error).message)
+    if (!authenticated) {
+      displayAlert('You must be connected to perform this action.', 'info')
     }
+
+    const alreadyExists = handleAlreadyAdded(element)
+    alreadyExists ? removeMovie(element) : addMovie(element)
   }
 
   const handleRedirect = (element: MovieData) => {
@@ -103,6 +106,7 @@ const Slider: React.FC<SliderTypes> = ({ category, url }) => {
         )}
         <Next />
       </Swiper>
+      <Alert />
     </div>
   )
 }
