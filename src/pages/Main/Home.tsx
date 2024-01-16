@@ -1,9 +1,10 @@
 import Navigation from '../../components/Header/Navigation'
 import Slider from '../../components/Carousel/Slider'
 import Footer from '../../components/Footer/Footer'
+import { useLanguages } from '../../hooks/useLanguages'
 
 const Home: React.FC = () => {
-  const locale = navigator.language
+  const { locale } = useLanguages()
   const url = 'https://api.themoviedb.org/3/'
   const trending = `${url}trending/all/day?language=${locale}`
   const movies = `${url}trending/movie/day?language=${locale}`

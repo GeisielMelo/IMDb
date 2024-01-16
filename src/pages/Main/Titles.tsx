@@ -11,6 +11,7 @@ import { VideosData } from '../../types/VideosData'
 import { SimilarData } from '../../types/SimilarData'
 import NotFound from '../../components/Error/NotFound'
 import { LoadingSpinner } from '../../components/animated/LoadingSpinner'
+import { useLanguages } from '../../hooks/useLanguages'
 
 type IParams = {
   id?: string
@@ -19,7 +20,7 @@ type IParams = {
 
 const Titles: React.FC = () => {
   const params = useParams<IParams>()
-  const locale: string = navigator.language
+  const { locale } = useLanguages()
   const { type, id } = params
 
   const urls = {
@@ -31,15 +32,52 @@ const Titles: React.FC = () => {
     videos: `https://api.themoviedb.org/3/${type}/${id}/videos?language=${locale}`,
   }
 
-  const { data: title, loading: titleLoading, error: titleError } = useFetchTMDB<TitleData>(urls.data)
-  const { data: release, loading: releaseLoading, error: releaseError } = useFetchTMDB<ReleaseData>(urls.release)
-  const { data: credits, loading: creditsLoading, error: creditsError } = useFetchTMDB<CreditsData>(urls.credits)
-  const { data: reviews, loading: reviewsLoading, error: reviewsError } = useFetchTMDB<ReviewsData>(urls.reviews)
-  const { data: similar, loading: similarLoading, error: similarError } = useFetchTMDB<SimilarData>(urls.similar)
-  const { data: videos, loading: videosLoading, error: videosError } = useFetchTMDB<VideosData>(urls.videos)
+  const {
+    data: title,
+    loading: titleLoading,
+    error: titleError,
+  } = useFetchTMDB<TitleData>(urls.data)
+  const {
+    data: release,
+    loading: releaseLoading,
+    error: releaseError,
+  } = useFetchTMDB<ReleaseData>(urls.release)
+  const {
+    data: credits,
+    loading: creditsLoading,
+    error: creditsError,
+  } = useFetchTMDB<CreditsData>(urls.credits)
+  const {
+    data: reviews,
+    loading: reviewsLoading,
+    error: reviewsError,
+  } = useFetchTMDB<ReviewsData>(urls.reviews)
+  const {
+    data: similar,
+    loading: similarLoading,
+    error: similarError,
+  } = useFetchTMDB<SimilarData>(urls.similar)
+  const {
+    data: videos,
+    loading: videosLoading,
+    error: videosError,
+  } = useFetchTMDB<VideosData>(urls.videos)
 
-  const loading = titleLoading || releaseLoading || creditsLoading || reviewsLoading || similarLoading || videosLoading
-  const error = titleError || releaseError || creditsError || reviewsError || similarError || videosError
+  const loading =
+    titleLoading ||
+    releaseLoading ||
+    creditsLoading ||
+    reviewsLoading ||
+    similarLoading ||
+    videosLoading
+
+  const error =
+    titleError ||
+    releaseError ||
+    creditsError ||
+    reviewsError ||
+    similarError ||
+    videosError
 
   if (loading) {
     return (
@@ -63,12 +101,13 @@ const Titles: React.FC = () => {
     )
   }
 
-  if (!title || !release || !credits || !reviews || !similar || !videos) return null
+  if (!title || !release || !credits || !reviews || !similar || !videos)
+    return null
 
   return (
     <>
       <Navigation />
-      <Title 
+      <Title
         title={title}
         release={release}
         credits={credits}
