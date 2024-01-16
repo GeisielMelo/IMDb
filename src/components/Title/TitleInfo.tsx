@@ -8,6 +8,8 @@ import { ReleaseData } from '../../types/ReleaseData'
 import { MovieData } from '../../types/MovieData'
 import YouTubePlayer from '../Modal/YouTubePlayer'
 import CircularProgressBar from '../animated/CircularProgressBar'
+import { useAuth } from '../../context/AuthContext'
+import { useDisplayAlert } from '../../hooks/useDisplayAlert'
 
 type InfoProps = {
   title: TitleData
@@ -18,6 +20,8 @@ type InfoProps = {
 export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
   const [showPlayer, setShowPlayer] = useState<boolean>(false)
   const { movies, addMovie, removeMovie } = useMovies()
+  const { Alert, displayAlert } = useDisplayAlert()
+  const { authenticated } = useAuth()
   const alreadyAdded = movies.some((_) => _.id === title.id)
   const titleCopy: MovieData = title
 
@@ -74,6 +78,13 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
     return false
   }
 
+  const handleLikeMovie = (element: MovieData) => {
+    if (!authenticated) {
+      displayAlert('You must be connected to perform this action.', 'info')
+    }
+    alreadyAdded ? removeMovie(element) : addMovie(element)
+  }
+
   return (
     <div className='flex flex-col justify-center px-8 gap-4'>
       <div>
@@ -94,15 +105,12 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
           <CircularProgressBar progressPercentage={handleVoteAverageToPercent(title.vote_average)} />
         </div>
 
-        {alreadyAdded ? (
-          <button className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]' onClick={() => removeMovie(titleCopy)}>
-            <Minus className='h-4' />
-          </button>
-        ) : (
-          <button className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]' onClick={() => addMovie(titleCopy)}>
-            <Plus className='h-4' />
-          </button>
-        )}
+        <button
+          className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'
+          onClick={() => handleLikeMovie(titleCopy)}
+        >
+          {alreadyAdded ? <Minus className='h-4' /> : <Plus className='h-4' />}
+        </button>
 
         <button
           className='flex items-center justify-center rounded-[50%] px-1 py-2 text-white bg-[#032541]'
@@ -116,7 +124,14 @@ export const TitleInfo: React.FC<InfoProps> = ({ title, release, videos }) => {
       <p className='font-normal text-[1.1rem] italic opacity-70 text-white'>{title.tagline}</p>
       <p className='text-white'>{title.overview}</p>
       {release && <TitleRelease release={release} />}
-      {showPlayer && <YouTubePlayer title={handleSetTitle(title)} url={handleGetVideoKey(videos)} onClose={() => setShowPlayer(!showPlayer)} />}
+      {showPlayer && (
+        <YouTubePlayer
+          title={handleSetTitle(title)}
+          url={handleGetVideoKey(videos)}
+          onClose={() => setShowPlayer(!showPlayer)}
+        />
+      )}
+      <Alert />
     </div>
   )
 }
