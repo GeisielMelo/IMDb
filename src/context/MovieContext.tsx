@@ -1,10 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from 'react'
+import { ReactNode, createContext, useContext, useState, useEffect } from 'react'
 import { show, create, update } from '../services/Firebase'
 import { useAuth } from './AuthContext'
 import { MovieData } from '../types/MovieData'
@@ -32,7 +26,7 @@ export const useMovies = () => {
 }
 
 export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
-  const { authenticated, user } = useAuth()
+  const { user } = useAuth()
   const [movies, setMovies] = useState<MovieData[]>([])
   const [synced, setSynced] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
@@ -65,23 +59,18 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
   }, [user, synced, movies])
 
   const addMovie = async (data: MovieData) => {
-    if (!authenticated || !user) {
-      throw Error('You must be connected to perform this action.')
-    }
-
+    if (!user) return
     setMovies((prev) => [...prev, data])
     const newMovies = [...movies]
     newMovies.push(data)
-    update(newMovies, user.uid)
+    await update(newMovies, user.uid)
   }
 
   const removeMovie = async (data: MovieData) => {
-    if (!authenticated || !user) {
-      throw Error('You must be connected to perform this action.')
-    }
+    if (!user) return
     setMovies((prev) => prev.filter((movie: MovieData) => movie.id !== data.id))
     const newMovies = movies.filter((movie: MovieData) => movie.id !== data.id)
-    update(newMovies, user.uid)
+    await update(newMovies, user.uid)
   }
 
   const value: MoviesContextProps = {
