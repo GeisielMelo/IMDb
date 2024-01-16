@@ -40,7 +40,7 @@ export const useDisplayAlert = () => {
     }
 
     return showAlert ? (
-      <div className='fixed bottom-40 w-full flex justify-center px-8 text-white'>
+      <div className='fixed bottom-40 w-full flex justify-center px-8 text-white z-50'>
         <h1 className={type}>{message}</h1>
       </div>
     ) : null
