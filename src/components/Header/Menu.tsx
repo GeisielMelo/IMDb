@@ -11,7 +11,7 @@ export const Menu: React.FC = () => {
   return (
     <>
       <div className='flex flex-row-reverse items-center md:flex-row'>
-        <h1 className='px-2 rounded cursor-pointer' onClick={() => navigate('/')}>
+        <h1 className='px-2 py-1 rounded cursor-pointer bg-[#032541]' onClick={() => navigate('/')}>
           TMDb
         </h1>
         <button className='flex px-4 py-1 gap-1' onClick={() => setIsOpen(!isOpen)}>
