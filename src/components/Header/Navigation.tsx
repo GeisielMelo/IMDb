@@ -10,7 +10,9 @@ const Navigation: React.FC = () => {
       <div className='flex items-center max-w-7xl w-full my-3 gap-2'>
         <Menu />
         <Search />
-        <Watchlist />
+        <div className='hidden md:block ml-2'>
+          <Watchlist />
+        </div>
         <Sign />
         <Language />
       </div>
