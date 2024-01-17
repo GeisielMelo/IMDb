@@ -5,7 +5,7 @@ import { useAuth } from './context/AuthContext'
 import Home from './pages/Main/Home'
 import Login from './pages/Sign/Login'
 import Register from './pages/Sign/Register'
-import List from './pages/Main/List'
+import Watchlist from './pages/Main/Watchlist'
 import NotFound from './components/Error/NotFound'
 import Search from './pages/Main/Search'
 import Titles from './pages/Main/Titles'
@@ -34,7 +34,7 @@ const AppRoutes: React.FC = () => {
         <Route path={'/:type/:id'} element={<Titles />} />
         <Route path={'sign-in'} element={<Public><Login /></Public>}/>
         <Route path={'sign-up'} element={<Public><Register /></Public>}/>
-        <Route path={'/my-list'} element={<Private><List /></Private>}/>
+        <Route path={'/my-list'} element={<Private><Watchlist /></Private>}/>
       </Routes>
     </BrowserRouter>
   )
