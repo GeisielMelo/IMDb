@@ -8,6 +8,15 @@ export const Menu: React.FC = () => {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   
+  const handleInternalLink = (url:string) => {
+    if (isOpen) {
+      setIsOpen(false)
+      internalLinkClick(url)
+    } else {
+      internalLinkClick(url)
+    }
+  }
+
   return (
     <>
       <div className='flex flex-row-reverse items-center md:flex-row'>
@@ -26,10 +35,10 @@ export const Menu: React.FC = () => {
         }`}
       >
         <ul className='flex flex-col gap-2 py-2'>
-          <li className='cursor-pointer' onClick={() => internalLinkClick('/#trending')}>Trending</li>
-          <li className='cursor-pointer' onClick={() => internalLinkClick('/#upcoming')}>Upcoming</li>
-          <li className='cursor-pointer' onClick={() => internalLinkClick('/#movies')}>Movies</li>
-          <li className='cursor-pointer' onClick={() => internalLinkClick('/#tv-show')}>Tv Show</li>
+          <li className='cursor-pointer' onClick={() => handleInternalLink('/#trending')}>Trending</li>
+          <li className='cursor-pointer' onClick={() => handleInternalLink('/#upcoming')}>Upcoming</li>
+          <li className='cursor-pointer' onClick={() => handleInternalLink('/#movies')}>Movies</li>
+          <li className='cursor-pointer' onClick={() => handleInternalLink('/#tv-show')}>Tv Show</li>
           <li className='block md:hidden'><Watchlist /></li>
         </ul>
       </div>
