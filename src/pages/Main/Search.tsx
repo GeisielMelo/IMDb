@@ -18,7 +18,7 @@ const Search = () => {
   return (
     <>
       <Navigation />
-      <section className='min-h-screen'>{q && <Slider category={'Results'} url={formatUrl(q, 1)} />}</section>
+      <section className='min-h-screen'>{q && <Slider id='searched' category={'Results'} url={formatUrl(q, 1)} />}</section>
       <Footer />
     </>
   )
