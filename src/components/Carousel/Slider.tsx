@@ -16,13 +16,14 @@ register()
 type SliderTypes = {
   category: string
   url: string
+  id: string
 }
 
 type ResultTypes = {
   results: MovieData[]
 }
 
-const Slider: React.FC<SliderTypes> = ({ category, url }) => {
+const Slider: React.FC<SliderTypes> = ({ id, category, url }) => {
   const navigate = useNavigate()
   const { Alert, displayAlert } = useDisplayAlert()
   const { data, loading, error } = useFetchTMDB<ResultTypes>(url)
@@ -74,7 +75,7 @@ const Slider: React.FC<SliderTypes> = ({ category, url }) => {
   }
 
   return (
-    <div className='my-8'>
+    <section id={id} className='my-8'>
       <h1 className='pl-8 font-sans font-medium'>{category}</h1>
       <Swiper {...params} className='px-8 relative flex'>
         <Prev />
@@ -107,7 +108,7 @@ const Slider: React.FC<SliderTypes> = ({ category, url }) => {
         <Next />
       </Swiper>
       <Alert />
-    </div>
+    </section>
   )
 }
 
