@@ -9,17 +9,15 @@ const Home: React.FC = () => {
   const trending = `${url}trending/all/day?language=${locale}`
   const movies = `${url}trending/movie/day?language=${locale}`
   const tvShow = `${url}trending/tv/day?language=${locale}`
-  const upcoming = `${url}movie/upcoming?language=${locale}&page=1`
-
+  
   return (
     <>
       <Navigation />
       <main className='min-h-screen flex item-center justify-center'>
         <div className='max-w-7xl w-full my-2'>
-          <Slider id='trending' category={'Trending'} url={trending} />
-          <Slider id='upcoming' category={'Upcoming'} url={upcoming} />
-          <Slider id='movies' category={'Movies'} url={movies} />
-          <Slider id='tv-show' category={'Tv Show'} url={tvShow} />
+          <Slider sectionName='trending' category='Trending' url={trending} />
+          <Slider sectionName='movies' category='Movies' url={movies} />
+          <Slider sectionName='tv-show' category='Tv Show' url={tvShow} />
         </div>
       </main>
       <Footer />
