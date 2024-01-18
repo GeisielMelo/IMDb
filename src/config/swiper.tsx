@@ -6,6 +6,5 @@ export const params: object = {
     640: { slidesPerView: 4 },
     768: { slidesPerView: 5 },
     1024: { slidesPerView: 6 },
-    1280: { slidesPerView: 7 },
   },
 }
