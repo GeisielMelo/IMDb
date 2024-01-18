@@ -7,7 +7,7 @@ type CardProps = {
   src: string
   title: string
   vote: number
-  media: string
+  media: string | null
 }
 
 export const Card: React.FC<CardProps> = ({ id, src, title, vote, media }) => {
