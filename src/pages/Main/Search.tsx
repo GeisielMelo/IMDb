@@ -7,7 +7,7 @@ import { Card } from '../../components/Card/Card'
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
 
-const Search:React.FC = () => {
+const Search: React.FC = () => {
   const { locale } = useLanguages()
   const { search } = useLocation()
 
@@ -41,6 +41,7 @@ const Search:React.FC = () => {
                       title={handleGetTitleName(element)}
                       vote={handleGetTitleVote(element)}
                       media={type}
+                      element={element}
                     />
                   ))}
                 </>

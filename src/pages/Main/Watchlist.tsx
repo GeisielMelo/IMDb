@@ -29,6 +29,7 @@ const Watchlist: React.FC = () => {
                   title={handleGetTitleName(element)}
                   vote={handleGetTitleVote(element)}
                   media={element.media_type}
+                  element={element}
                 />
               ))}
             </>

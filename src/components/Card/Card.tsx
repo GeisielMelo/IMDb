@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from './Button'
+import { MovieData } from '../../types/MovieData'
 
 type CardProps = {
   id: number
@@ -8,9 +9,10 @@ type CardProps = {
   title: string
   vote: number
   media: string | null
+  element: MovieData
 }
 
-export const Card: React.FC<CardProps> = ({ id, src, title, vote, media }) => {
+export const Card: React.FC<CardProps> = ({ id, src, title, vote, media, element }) => {
   const navigate = useNavigate()
 
   return (
@@ -28,7 +30,7 @@ export const Card: React.FC<CardProps> = ({ id, src, title, vote, media }) => {
       </div>
 
       <h1 className='text-lg px-2'>{title}</h1>
-      <Button id={id} />
+      <Button element={element} />
     </div>
   )
 }
