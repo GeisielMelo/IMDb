@@ -17,5 +17,5 @@ export const handleGetTitlePoster = (element: MovieData): string => {
 export const handleGetTitleVote = (element: MovieData): number => {
   const vote = element.vote_average
   const noVote = 0.0
-  return vote ? parseInt(vote.toFixed(1)) : noVote
+  return vote ? Number(vote.toPrecision(2)) : noVote
 }
