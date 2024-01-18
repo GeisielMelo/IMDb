@@ -1,4 +1,4 @@
-import { MovieData } from "../types/MovieData"
+import { MovieData } from '../types/MovieData'
 
 export const handleGetTitleName = (element: MovieData): string => {
   if (element.title) return element.title
@@ -18,4 +18,13 @@ export const handleGetTitleVote = (element: MovieData): number => {
   const vote = element.vote_average
   const noVote = 0.0
   return vote ? Number(vote.toPrecision(2)) : noVote
+}
+
+export const handleAddMediaType = (data: MovieData[], type: string): MovieData[] => {
+  return data.map((element) => {
+    if (!Object.prototype.hasOwnProperty.call(element, 'media_type')) {
+      return { ...element, media_type: type }
+    }
+    return element
+  })
 }

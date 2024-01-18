@@ -1,6 +1,6 @@
 import { useMovies } from '../../context/MovieContext'
 import { Card } from '../../components/Card/Card'
-import { handleGetTitlePoster, handleGetTitleName, handleGetTitleVote } from '../../utils/TheMovieDbUtils'
+import { handleGetTitlePoster, handleGetTitleName, handleGetTitleVote } from '../../utils/handleFunctionsUtils'
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
 

@@ -2,7 +2,7 @@ import { Menu as MenuIcon, X } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Watchlist } from './Watchlist'
-import { internalLinkClick } from '../../utils/handleFunctions'
+import { internalLinkClick } from '../../utils/applicationUtils'
 
 export const Menu: React.FC = () => {
   const navigate = useNavigate()

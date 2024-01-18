@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { MovieData } from '../types/MovieData'
+import { handleAddMediaType } from '../utils/handleFunctionsUtils'
 
 type FetchDataError = {
   status: number
@@ -36,18 +37,21 @@ export const useSpreadableSearch = (query: string | null, type: string | null, l
     const fetchData = async (): Promise<void> => {
       try {
         if (!query || !type) throw Error('Missing Params')
+
         const formattedQuery = query.replace(' ', '%20')
         const url = 'https://api.themoviedb.org/3/search'
         const fullUrl = `${url}/${type}?query=${formattedQuery}&include_adult=false&language=${locale}&page=${page}`
+
         if (data) setLoadingMore(true)
 
         const response = await fetch(fullUrl, options)
         const result = await response.json()
+        const filteredResult = handleAddMediaType(result.results, type)
 
         if (data) {
-          setData([...data, ...result.results])
+          setData([...data, ...filteredResult])
         } else {
-          setData(result.results)
+          setData(filteredResult)
         }
 
         if (maxPage == 0) setMaxPage(result.total_pages)
