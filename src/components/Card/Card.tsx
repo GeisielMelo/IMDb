@@ -22,8 +22,8 @@ export const Card: React.FC<CardProps> = ({ id, src, title, vote, media, element
   const navigate = useNavigate()
 
   const handleNavigate = () => {
-    if (media) navigate(`/${media}/${id}`)
-    navigate(`/${params.type}/${id}`)
+    if (media) return navigate(`/${media}/${id}`)
+    return navigate(`/${params.type}/${id}`)
   }
 
   return (
