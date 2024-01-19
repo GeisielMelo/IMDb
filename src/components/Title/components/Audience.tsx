@@ -1,13 +1,20 @@
-import { ReleaseData } from '../../types/ReleaseData'
+import { useFetchTMDB } from '../../../hooks/useFetchTMDB'
+import { ReleaseData } from '../../../types/ReleaseData'
 
-type ReleaseProps = {
-  release: ReleaseData
+type Audience = {
+  type: string
+  id: string | number
 }
 
-export const TitleRelease: React.FC<ReleaseProps> = ({ release }) => {
-  if (Object.prototype.hasOwnProperty.call(release, 'status_code')) return null
+export const Audience: React.FC<Audience> = ({ type, id }) => {
+  const url = `https://api.themoviedb.org/3/${type}/${id}/release_dates`
+  const { data, loading, error } = useFetchTMDB<ReleaseData>(url)
 
-  const releaseInfo = release.results.find((_) => _.iso_3166_1 === 'BR')
+  if (error || !data || loading) return null
+
+  if (Object.prototype.hasOwnProperty.call(data, 'status_code')) return null
+
+  const releaseInfo = data.results.find((_) => _.iso_3166_1 === 'BR')
   if (!releaseInfo) return null
 
   const info = releaseInfo.release_dates[0]
@@ -36,9 +43,9 @@ export const TitleRelease: React.FC<ReleaseProps> = ({ release }) => {
   }
 
   return (
-    <ul className='flex gap-4 items-center justify-start'>
+    <ul className='flex gap-2 items-center justify-start'>
       <li
-        className='flex w-8 h-8 items-center justify-center border border-zinc-400 rounded-md text-sm text-white font-semibold'
+        className='flex w-8 h-8 items-center justify-center border border-zinc-400 rounded-md text-sm text-white'
         style={{ background: handleCertificationColor() }}
       >
         {certification ? certification : 'NR'}
