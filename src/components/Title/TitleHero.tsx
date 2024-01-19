@@ -36,7 +36,7 @@ export const TitleHero: React.FC<Hero> = ({ locale, type, id }) => {
           </div>
         )}
       </section>
-      
+
       <section id='MobileVersion' className='block md:hidden'>
         {loading ? (
           <HeroSkeleton />
