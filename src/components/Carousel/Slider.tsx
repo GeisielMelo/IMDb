@@ -7,6 +7,7 @@ import { Prev, Next } from './Navigation'
 import { Card } from '../Card/Card'
 import { useFetchTMDB } from '../../hooks/useFetchTMDB'
 import { handleGetTitleName, handleGetTitlePoster, handleGetTitleVote } from '../../utils/handleFunctionsUtils'
+import { CardSkeleton } from './Skeleton'
 register()
 
 type SliderTypes = {
@@ -20,22 +21,22 @@ type ResultTypes = {
 }
 
 const Slider: React.FC<SliderTypes> = ({ sectionName, category, url }) => {
-  const { data, loading, error } = useFetchTMDB<ResultTypes>(url)
+  const { data, error, loading } = useFetchTMDB<ResultTypes>(url)
 
   if (error || !data) return null
-
+  
   const results = data.results
 
   return (
     <section id={sectionName} className='my-8'>
-      <h1 className='pl-8 mb-2 font-sans font-medium'>{category}</h1>
+      <h1 className='pl-8 mb-2 font-sans font-semibold text-lg'>{category}</h1>
       <Swiper {...params} className='px-8 grid grid-cols-1'>
         <Prev />
         {loading ? (
           <>
             {[...Array(8)].map((_, index) => (
               <SwiperSlide key={index}>
-                <>Loading...</>
+                <CardSkeleton/>
               </SwiperSlide>
             ))}
           </>
