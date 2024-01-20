@@ -4,6 +4,7 @@ import { useInfiniteScroll as InfiniteScroll } from '../../hooks/useInfiniteScro
 import { useSpreadableSearch } from '../../hooks/useSpreadableSearch'
 import { handleGetTitlePoster, handleGetTitleName, handleGetTitleVote } from '../../utils/handleFunctionsUtils'
 import { Card } from '../../components/Card/Card'
+import { Spinner } from '../../components/animated/Spinner'
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
 
@@ -51,6 +52,13 @@ const Search: React.FC = () => {
             </>
           )}
         </div>
+
+        {loadingMore && (
+          <div className='my-8'>
+            <Spinner />
+          </div>
+        )}
+
         {page < maxPage && data && !loading && !loadingMore && <InfiniteScroll fetchMore={() => setPage(page + 1)} />}
       </section>
       <Footer />
