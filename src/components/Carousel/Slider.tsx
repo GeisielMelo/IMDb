@@ -24,8 +24,10 @@ const Slider: React.FC<SliderTypes> = ({ sectionName, category, url }) => {
   const { data, error, loading } = useFetchTMDB<ResultTypes>(url)
 
   if (error || !data) return null
-  
+
   const results = data.results
+
+  if (!results.length) return null
 
   return (
     <section id={sectionName} className='my-8'>
@@ -36,7 +38,7 @@ const Slider: React.FC<SliderTypes> = ({ sectionName, category, url }) => {
           <>
             {[...Array(8)].map((_, index) => (
               <SwiperSlide key={index}>
-                <CardSkeleton/>
+                <CardSkeleton />
               </SwiperSlide>
             ))}
           </>

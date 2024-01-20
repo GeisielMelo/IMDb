@@ -17,6 +17,9 @@ export const TitleCredits: React.FC<Credits> = ({ locale, type, id }) => {
   if (error || !data) return null
 
   const cast = data.cast
+
+  if (!cast.length) return null
+
   const isMaxCardReached = maxCards >= cast.length
 
   return (
