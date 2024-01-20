@@ -9,7 +9,12 @@ export const Search: React.FC = () => {
   const [params, setParams] = useState<string>('')
 
   const handleSubmit = () => {
-    params ? navigate(`/search?q=${params}&type=${selected}`) : navigate('/')
+    if (params) {
+      navigate(`/search?q=${params}&type=${selected}`)
+      window.location.reload()
+    } else {
+      navigate('/')
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
