@@ -1,9 +1,9 @@
-import CircularProgressBar from '../../animated/CircularProgressBar'
+import { handleGetTitleName, handleGetTitleReleaseYear, handleTitleDuration, handleVoteAverageToPercent } from '../../../utils/handleFunctionsUtils'
 import { Audience } from './Audience'
 import { TitleData } from '../../../types/TitleData'
-import { handleGetTitleName, handleGetTitleReleaseYear, handleTitleDuration, handleVoteAverageToPercent } from '../../../utils/handleFunctionsUtils'
 import { Trailer } from './Trailer'
 import { Watch } from './Watch'
+import CircularProgressBar from '../../animated/CircularProgressBar'
 
 type Info = {
   data: TitleData
@@ -32,7 +32,7 @@ export const Info: React.FC<Info> = ({ data, locale, type, id }) => {
       </div>
 
       <h1 className='my-4 font-normal text-[1.1rem] italic opacity-70 text-white'>{data.tagline}</h1>
-      <h2 className='font-semibold text-lg text-white'>Overview</h2>
+      {data.overview && <h2 className='font-semibold text-lg text-white'>Overview</h2>}
       <p className='mt-2 mb-4 text-white'>{data.overview}</p>
       <Audience type={type} id={id} />
     </div>
