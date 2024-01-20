@@ -1,5 +1,6 @@
 import { useFetchTMDB } from '../../hooks/useFetchTMDB'
 import { TitleData } from '../../types/TitleData'
+import { handleGetTitleName } from '../../utils/handleFunctionsUtils'
 import { Image } from './components/Image'
 import { Info } from './components/Info'
 import { HeroSkeleton } from './components/Skeletons'
@@ -30,7 +31,7 @@ export const TitleHero: React.FC<Hero> = ({ locale, type, id }) => {
         ) : (
           <div className='flex justify-center bg-no-repeat bg-cover p-8' style={{ backgroundImage: bgImageProps }}>
             <div className='max-w-7xl max-h-[510px] w-full flex'>
-              <Image title={data.original_title} src={data.poster_path} />
+              <Image title={handleGetTitleName(data)} src={data.poster_path} />
               <Info data={data} locale={locale} type={type} id={id} />
             </div>
           </div>
@@ -44,7 +45,7 @@ export const TitleHero: React.FC<Hero> = ({ locale, type, id }) => {
           <>
             <div className='bg-no-repeat bg-cover p-8' style={{ backgroundImage: bgImageProps }}>
               <div className='max-w-7xl max-h-[510px] w-full flex'>
-                <Image title={data.original_title} src={data.poster_path} />
+                <Image title={handleGetTitleName(data)} src={data.poster_path} />
               </div>
             </div>
             <Info data={data} locale={locale} type={type} id={id} />

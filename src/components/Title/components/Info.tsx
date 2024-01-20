@@ -1,7 +1,7 @@
 import CircularProgressBar from '../../animated/CircularProgressBar'
 import { Audience } from './Audience'
 import { TitleData } from '../../../types/TitleData'
-import { handleGetTitleReleaseYear, handleTitleDuration, handleVoteAverageToPercent } from '../../../utils/handleFunctionsUtils'
+import { handleGetTitleName, handleGetTitleReleaseYear, handleTitleDuration, handleVoteAverageToPercent } from '../../../utils/handleFunctionsUtils'
 import { Trailer } from './Trailer'
 import { Watch } from './Watch'
 
@@ -16,7 +16,7 @@ export const Info: React.FC<Info> = ({ data, locale, type, id }) => {
   return (
     <div className='flex flex-col justify-start p-8 bg-slate-700 md:pt-0 md:bg-transparent'>
       <h1 className='text-[calc(.7em+3vw)] md:text-4xl font-bold text-white'>
-        {data.title} {handleGetTitleReleaseYear(data)}
+        {handleGetTitleName(data)} {handleGetTitleReleaseYear(data)}
       </h1>
       <ul className='flex flex-wrap gap-2 text-white'>
         {data.genres.map((_, key) => (
