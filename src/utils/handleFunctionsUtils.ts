@@ -41,7 +41,7 @@ export const handleGetTitleReleaseYear = (element: TitleData) => {
 export const handleTitleDuration = (minutes: number) => {
   const hh = Math.floor(minutes / 60)
   const mm = minutes % 60
-  return `${hh}h ${mm}m`
+  return minutes ? `${hh}h ${mm}m` : ''
 }
 
 export const handleGetTitleKey = (element: VideosData) => {
