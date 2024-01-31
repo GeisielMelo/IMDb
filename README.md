@@ -4,7 +4,7 @@ An app created in my free time with the aim of being a front-end-only applicatio
 
 ## Deploy
 
-[Demo](https://imdb-omega-olive.vercel.app) hosted with Vercel. 
+[Demo](https://tmdb.geisielmelo.vercel.app) hosted with Vercel. 
 
 ## Preview
 
