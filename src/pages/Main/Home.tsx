@@ -6,7 +6,7 @@ import { useLanguages } from '../../hooks/useLanguages'
 const Home: React.FC = () => {
   const { locale } = useLanguages()
   const url = 'https://api.themoviedb.org/3/'
-  const trending = `${url}trending/all/day?language=${locale}`
+  const trending = `${url}trending/all/week?language=${locale}`
   const movies = `${url}trending/movie/day?language=${locale}`
   const tvShow = `${url}trending/tv/day?language=${locale}`
   
