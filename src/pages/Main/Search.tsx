@@ -2,11 +2,11 @@ import { useLocation } from 'react-router-dom'
 import { useLanguages } from '../../hooks/useLanguages'
 import { useInfiniteScroll as InfiniteScroll } from '../../hooks/useInfiniteScroll'
 import { useSpreadableSearch } from '../../hooks/useSpreadableSearch'
-import { handleGetTitlePoster, handleGetTitleName, handleGetTitleVote } from '../../utils/handleFunctionsUtils'
 import { Card } from '../../components/Card/Card'
 import { Spinner } from '../../components/animated/Spinner'
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
+import { filterMovieDataArr } from '../../utils/filterData'
 
 const Search: React.FC = () => {
   const { locale } = useLanguages()
@@ -16,7 +16,9 @@ const Search: React.FC = () => {
   const query: string | null = queryParams.get('q')
   const type: string | null = queryParams.get('type')
 
-  const { page, maxPage, data, loading, loadingMore, setPage } = useSpreadableSearch(query, type, locale)
+  const { page, maxPage, data, error, loading, loadingMore, setPage } = useSpreadableSearch(query, type, locale)
+
+  if (error) return null
 
   return (
     <>
@@ -32,33 +34,25 @@ const Search: React.FC = () => {
             </>
           ) : (
             <>
-              {data ? (
+              {data && (
                 <>
-                  {data.map((element, key) => (
+                  {filterMovieDataArr(data).map((element, key) => (
                     <Card
                       key={key}
                       id={element.id}
-                      src={handleGetTitlePoster(element)}
-                      title={handleGetTitleName(element)}
-                      vote={handleGetTitleVote(element)}
-                      media={type}
-                      element={element}
+                      src={element.src}
+                      title={element.title}
+                      vote={element.vote}
+                      media={element.media}
                     />
                   ))}
                 </>
-              ) : (
-                <div className='h-screen'>No results.</div>
               )}
             </>
           )}
         </div>
 
-        {loadingMore && (
-          <div className='my-8'>
-            <Spinner />
-          </div>
-        )}
-
+        {loadingMore && (<div className='my-8'><Spinner /></div>)}
         {page < maxPage && data && !loading && !loadingMore && <InfiniteScroll fetchMore={() => setPage(page + 1)} />}
       </section>
       <Footer />
