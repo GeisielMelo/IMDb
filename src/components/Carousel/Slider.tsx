@@ -2,12 +2,12 @@ import 'swiper/css'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { params } from '../../config/swiper'
 import { register } from 'swiper/element/bundle'
-import { MovieData } from '../../types/MovieData'
 import { Prev, Next } from './Navigation'
 import { Card } from '../Card/Card'
-import { useFetchTMDB } from '../../hooks/useFetchTMDB'
-import { handleGetTitleName, handleGetTitlePoster, handleGetTitleVote } from '../../utils/handleFunctionsUtils'
 import { CardSkeleton } from './Skeleton'
+import { filterMovieDataArr } from '../../utils/filterData'
+import { useFetchCategory } from '../../hooks/useFetchCategory'
+import { MovieData } from '../../types/MovieData'
 register()
 
 type SliderTypes = {
@@ -16,18 +16,10 @@ type SliderTypes = {
   sectionName: string
 }
 
-type ResultTypes = {
-  results: MovieData[]
-}
-
 const Slider: React.FC<SliderTypes> = ({ sectionName, category, url }) => {
-  const { data, error, loading } = useFetchTMDB<ResultTypes>(url)
+  const { data, error, loading } = useFetchCategory<MovieData[]>(url)
 
-  if (error || !data) return null
-
-  const results = data.results
-
-  if (!results.length) return null
+  if (error) return null
 
   return (
     <section id={sectionName} className='my-8'>
@@ -44,21 +36,24 @@ const Slider: React.FC<SliderTypes> = ({ sectionName, category, url }) => {
           </>
         ) : (
           <>
-            {results.map((element, key) => (
-              <SwiperSlide key={key}>
-                <div className='mx-[0.25rem]'>
-                  <Card
-                    key={key}
-                    id={element.id}
-                    src={handleGetTitlePoster(element)}
-                    title={handleGetTitleName(element)}
-                    vote={handleGetTitleVote(element)}
-                    media={element.media_type}
-                    element={element}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
+            {data && (
+              <>
+                {filterMovieDataArr(data).map((element, key) => (
+                  <SwiperSlide key={key}>
+                    <div className='mx-[0.25rem]'>
+                      <Card
+                        key={key}
+                        id={element.id}
+                        src={element.src}
+                        title={element.title}
+                        vote={element.vote}
+                        media={element.media}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </>
+            )}
           </>
         )}
         <Next />
