@@ -16,9 +16,15 @@ export const Watch: React.FC<Watch> = ({ element, type }) => {
   const isAdded = movies.some((_) => _.id === element.id)
 
   const handleLikeMovie = () => {
-    const newData = { ...element, media_type: type }
     if (!authenticated) return displayAlert('You must be connected to perform this action.', 'info')
-    return isAdded ? removeMovie(newData) : addMovie(newData)
+    const data = {
+      id: element.id,
+      src: element.backdrop_path,
+      title: element.original_title || element.title,
+      vote: element.vote_average,
+      media: type,
+    }
+    return isAdded ? removeMovie(data) : addMovie(data)
   }
 
   return (
