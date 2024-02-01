@@ -1,7 +1,14 @@
 import { ReactNode, createContext, useContext, useState, useEffect } from 'react'
 import { show, create, update } from '../services/Firebase'
 import { useAuth } from './AuthContext'
-import { MovieData } from '../types/MovieData'
+
+type Data = {
+  id: number
+  src: string
+  title: string
+  vote: number
+  media?: string
+}
 
 type MovieProviderProps = {
   children: ReactNode
@@ -9,9 +16,9 @@ type MovieProviderProps = {
 
 type MoviesContextProps = {
   loading: boolean
-  movies: MovieData[]
-  addMovie: (data: MovieData) => void
-  removeMovie: (data: MovieData) => void
+  movies: Data[]
+  addMovie: (data: Data) => void
+  removeMovie: (data: Data) => void
 }
 
 const MovieContext = createContext<MoviesContextProps | undefined>(undefined)
@@ -27,7 +34,7 @@ export const useMovies = () => {
 
 export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
   const { user } = useAuth()
-  const [movies, setMovies] = useState<MovieData[]>([])
+  const [movies, setMovies] = useState<Data[]>([])
   const [synced, setSynced] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -58,7 +65,7 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
     fetchInitialMovies()
   }, [user, synced, movies])
 
-  const addMovie = async (data: MovieData) => {
+  const addMovie = async (data: Data) => {
     if (!user) return
     setMovies((prev) => [...prev, data])
     const newMovies = [...movies]
@@ -66,10 +73,10 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
     await update(newMovies, user.uid)
   }
 
-  const removeMovie = async (data: MovieData) => {
+  const removeMovie = async (data: Data) => {
     if (!user) return
-    setMovies((prev) => prev.filter((movie: MovieData) => movie.id !== data.id))
-    const newMovies = movies.filter((movie: MovieData) => movie.id !== data.id)
+    setMovies((prev) => prev.filter((movie: Data) => movie.id !== data.id))
+    const newMovies = movies.filter((movie: Data) => movie.id !== data.id)
     await update(newMovies, user.uid)
   }
 
