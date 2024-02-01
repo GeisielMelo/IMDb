@@ -34,7 +34,7 @@ export const Card: React.FC<CardProps> = ({ id, src, title, vote, media }) => {
 
   const handleLikeMovie = () => {
     if (!authenticated) return displayAlert('You must be connected to perform this action.', 'info')
-    const data = { id, src, title, vote, media: media || params.type }
+    const data = { id, src, title, vote, media: media || (params.type as string) }
     return isAdded ? removeMovie(data) : addMovie(data)
   }
 
