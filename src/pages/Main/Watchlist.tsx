@@ -1,6 +1,5 @@
 import { useMovies } from '../../context/MovieContext'
 import { Card } from '../../components/Card/Card'
-import { handleGetTitlePoster, handleGetTitleName, handleGetTitleVote } from '../../utils/handleFunctionsUtils'
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
 
@@ -25,11 +24,10 @@ const Watchlist: React.FC = () => {
                 <Card
                   key={key}
                   id={element.id}
-                  src={handleGetTitlePoster(element)}
-                  title={handleGetTitleName(element)}
-                  vote={handleGetTitleVote(element)}
-                  media={element.media_type}
-                  element={element}
+                  src={element.src}
+                  title={element.title}
+                  vote={element.vote}
+                  media={element.media}
                 />
               ))}
             </>
