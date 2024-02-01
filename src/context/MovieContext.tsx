@@ -7,7 +7,7 @@ type Data = {
   src: string
   title: string
   vote: number
-  media?: string
+  media: string
 }
 
 type MovieProviderProps = {
