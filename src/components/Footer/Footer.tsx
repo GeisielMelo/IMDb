@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
         <li>Accessibility</li>
       </ul>
       <p>© 2023-{currentYear} by GeisielMelo.</p>
-      <p className='text-xs text-zinc-700'>{'release-1.0(alpha)'}</p>
+      <p className='text-xs text-zinc-700'>{'release-1.1.3(alpha)'}</p>
     </footer>
   )
 }
