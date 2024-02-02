@@ -6,28 +6,29 @@ type ShowCaseProps = {
 }
 
 const Showcase: React.FC<ShowCaseProps> = ({ url }) => {
-  // const bgUrl = 'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces'
   const { data, error, loading } = useFetchCategory<MovieData[]>(url)
 
+  if (!data && loading) return <section className='h-96 xl:rounded-bl xl:rounded-br animate-pulse bg-zinc-500' />
   if (error) return null
 
-  const setRandomShowCase = (element: MovieData[]) => {
+  const setRandomShowCase = (element: MovieData[] | null) => {
+    if (!element) return
+    const bgUrl = 'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces'
     const randomIndex = Math.floor(Math.random() * element.length)
-    return element[randomIndex]
+    const item = element[randomIndex]
+
+    const bg = `url(${bgUrl + item.backdrop_path})`
+    // const url = `/${item.media_type}/${item.id}`
+
+    return (
+      <section
+        className='h-96 pt-16 px-10 bg-no-repeat bg-cover bg-center xl:rounded-bl xl:rounded-br'
+        style={{ backgroundImage: bg }}
+      />
+    )
   }
 
-  return loading ? (
-    <section className='h-96 bg-zinc-500 rounded animate-pulse' />
-  ) : (
-    data && (
-      <section className='h-96 rounded pt-16 px-10 bg-no-repeat bg-cover'>
-        <div>
-          <h1>{'Bem-Vindo(a).'}</h1>
-          <h2>{'Milhões de Filmes, Séries e Pessoas para Descobrir. Explore já.'}</h2>
-        </div>
-      </section>
-    )
-  )
+  return setRandomShowCase(data)
 }
 
 export default Showcase
