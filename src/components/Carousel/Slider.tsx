@@ -22,8 +22,8 @@ const Slider: React.FC<SliderTypes> = ({ sectionName, category, url }) => {
   if (error) return null
 
   return (
-    <section id={sectionName} className='my-8'>
-      <h1 className='ml-8 mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-black rounded-full max-w-max'>
+    <section id={sectionName}>
+      <h1 className='ml-8 mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-zinc-700 text-white rounded-full max-w-max'>
         {category}
       </h1>
       <Swiper {...params} className='px-8 grid grid-cols-1'>
