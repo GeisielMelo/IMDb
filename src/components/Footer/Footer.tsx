@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className='flex flex-col items-center justify-center pt-8 pb-4 gap-4 bg-black text-white'>
+    <footer className='flex flex-col items-center justify-center mt-8 pt-8 pb-4 gap-4 bg-black text-white'>
       <div className='flex flex-wrap gap-4'>
         <button className='p-2' onClick={() => window.open('https://github.com/GeisielMelo', '_blank')}>
           <Github />
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
         <li>Accessibility</li>
       </ul>
       <p>© 2023-{currentYear} by GeisielMelo.</p>
-      <p className='text-xs text-zinc-700'>{'release-1.1.3(alpha)'}</p>
+      <p className='text-xs text-zinc-700'>{'release-1.1.4(alpha)'}</p>
     </footer>
   )
 }
