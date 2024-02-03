@@ -1,34 +1,28 @@
 import { useFetchCategory } from '../../hooks/useFetchCategory'
 import { MovieData } from '../../types/MovieData'
+import { Banner } from './Banner'
 
-type ShowCaseProps = {
+type ShowcaseProps = {
   url: string
 }
 
-const Showcase: React.FC<ShowCaseProps> = ({ url }) => {
+const Showcase: React.FC<ShowcaseProps> = ({ url }) => {
   const { data, error, loading } = useFetchCategory<MovieData[]>(url)
 
-  if (!data && loading) return <section className='h-96 xl:rounded-bl xl:rounded-br animate-pulse bg-zinc-500' />
   if (error) return null
 
-  const setRandomShowCase = (element: MovieData[] | null) => {
-    if (!element) return
+  const setRandomBackground = (element: MovieData[]) => {
     const bgUrl = 'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces'
     const randomIndex = Math.floor(Math.random() * element.length)
     const item = element[randomIndex]
-
-    const bg = `url(${bgUrl + item.backdrop_path})`
-    // const url = `/${item.media_type}/${item.id}`
-
-    return (
-      <section
-        className='h-96 pt-16 px-10 bg-no-repeat bg-cover bg-center xl:rounded-bl xl:rounded-br'
-        style={{ backgroundImage: bg }}
-      />
-    )
+    return `url(${bgUrl + item.backdrop_path})`
   }
 
-  return setRandomShowCase(data)
+  return loading ? (
+    <section className='h-[18.75rem] md:h-[31.25rem] animate-pulse bg-zinc-500' />
+  ) : (
+    data && <Banner src={setRandomBackground(data)} />
+  )
 }
 
 export default Showcase
