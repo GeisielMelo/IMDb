@@ -29,7 +29,9 @@ export const TitleCredits: React.FC<Credits> = ({ locale, type, id }) => {
         <div>Loading...</div>
       ) : (
         <div className='max-w-5xl w-full'>
-          <h1 className='mb-6 text-xl font-semibold'>Top Cast</h1>
+          <h1 className='mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-zinc-700 text-white rounded-full max-w-max'>
+            Top Cast
+          </h1>
           <div className=' grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2'>
             {cast
               .slice(0, maxCards)
@@ -48,7 +50,7 @@ export const TitleCredits: React.FC<Credits> = ({ locale, type, id }) => {
           <div className='text-center mt-6'>
             {!isMaxCardReached && (
               <button
-                className='py-1 px-2 m-2 border border-zinc-500 rounded-lg'
+                className='py-1 px-2 m-2 border rounded-lg border-zinc-700 text-white hover:text-white/50 transition-all'
                 onClick={() => setMaxCards(maxCards + 6)}
               >
                 More
@@ -56,7 +58,10 @@ export const TitleCredits: React.FC<Credits> = ({ locale, type, id }) => {
             )}
 
             {maxCards > 6 && (
-              <button className='py-1 px-2 m-2 border border-zinc-500 rounded-lg' onClick={() => setMaxCards(6)}>
+              <button
+                className='py-1 px-2 m-2 border rounded-lg border-zinc-700 text-white hover:text-white/50 transition-all'
+                onClick={() => setMaxCards(6)}
+              >
                 Hide
               </button>
             )}
