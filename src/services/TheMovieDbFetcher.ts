@@ -1,11 +1,63 @@
 import axios, { AxiosResponse } from 'axios'
 
-interface CastApiResponse {
+interface CreditsApiResponse {
   cast: {
-    name: string;
-    character: string;
-    profile_path: string | null;
-  }[];
+    name: string
+    character: string
+    profile_path: string | null
+  }[]
+}
+
+interface SimilarApiResponse {
+  results: {
+    id: number
+    original_title: string
+    title: string
+    poster_path: string | null
+    vote_average: number
+  }[]
+}
+
+interface ReviewsApiResponse {
+  results: {
+    author_details: {
+      username: string
+    }
+    content: string
+  }[]
+}
+
+interface TitleApiResponse {
+  id: number
+  backdrop_path: string
+  genres: {
+    name: string
+  }[]
+  original_title: string
+  title: string
+  overview: string
+  poster_path: string
+  release_date: string
+  runtime: number
+  tagline: string
+}
+
+interface AudienceApiResponse {
+  results: {
+    iso_3166_1: string
+    release_dates: {
+      certification: string
+    }[]
+  }[]
+}
+
+interface TrailerApiResponse {
+  results: {
+    name: string
+    type: string
+    key: string
+    official: boolean
+  }[]
 }
 
 class TheMovieDbFetcher {
@@ -21,32 +73,32 @@ class TheMovieDbFetcher {
     this.url = 'https://api.themoviedb.org/3/'
   }
 
-  public fetchAudience = async (): Promise<Response> => {
-    const url: string = `${this.url}${this.type}/${this.id}/release_dates`
-    return await axios.get(url, this.getAuthorization())
-  }
-
-  public fetchTrailer = async (): Promise<Response> => {
-    const url: string = `${this.url}${this.type}/${this.id}/videos?language=${this.locale}`
-    return await axios.get(url, this.getAuthorization())
-  }
-
-  public fetchCredits = async (): Promise<AxiosResponse<CastApiResponse>> => {
-    const url: string = `${this.url}${this.type}/${this.id}/credits?language=${this.locale}`
-    return await axios.get(url, this.getAuthorization())
-  }
-
-  public fetchName = async (): Promise<Response> => {
+  public fetchTitle = async (): Promise<AxiosResponse<TitleApiResponse>> => {
     const url: string = `${this.url}${this.type}/${this.id}?language=${this.locale}`
     return await axios.get(url, this.getAuthorization())
   }
 
-  public fetchReviews = async (): Promise<Response> => {
+  public fetchAudience = async (): Promise<AxiosResponse<AudienceApiResponse>> => {
+    const url: string = `${this.url}${this.type}/${this.id}/release_dates`
+    return await axios.get(url, this.getAuthorization())
+  }
+
+  public fetchTrailer = async (): Promise<AxiosResponse<TrailerApiResponse>> => {
+    const url: string = `${this.url}${this.type}/${this.id}/videos?language=${this.locale}`
+    return await axios.get(url, this.getAuthorization())
+  }
+
+  public fetchCredits = async (): Promise<AxiosResponse<CreditsApiResponse>> => {
+    const url: string = `${this.url}${this.type}/${this.id}/credits?language=${this.locale}`
+    return await axios.get(url, this.getAuthorization())
+  }
+
+  public fetchReviews = async (): Promise<AxiosResponse<ReviewsApiResponse>> => {
     const url: string = `${this.url}${this.type}/${this.id}/reviews?language=${this.locale}`
     return await axios.get(url, this.getAuthorization())
   }
 
-  public fetchSimilar = async (): Promise<Response> => {
+  public fetchSimilar = async (): Promise<AxiosResponse<SimilarApiResponse>> => {
     const url: string = `${this.url}${this.type}/${this.id}/similar?language=${this.locale}`
     return await axios.get(url, this.getAuthorization())
   }
