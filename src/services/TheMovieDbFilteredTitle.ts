@@ -6,6 +6,19 @@ type Cast = {
   profile_path: string
 }
 
+type Similar = {
+  id: number
+  src: string
+  title: string
+  vote: number
+  media: string
+}
+
+type Review = {
+  user: string
+  content: string
+}
+
 class TheMovieDbFilteredTitle {
   locale: string
   type: string
@@ -22,23 +35,71 @@ class TheMovieDbFilteredTitle {
   public getFilteredTitle = async () => {
     const data = {
       hero: await this.filterHeroData(),
-      similar: await this.filterSimilarData,
-      cast: await this.filterCastData(),
+      similar: await this.filterSimilarData(),
+      credits: await this.filterCreditsData(),
       reviews: await this.filterReviewsData(),
     }
     return data
   }
 
-  private filterHeroData = async () => {}
+  private filterHeroData = async () => {
+    try {
+      const title = await this.fetcher.fetchTitle()
+      const audience = await this.fetcher.fetchAudience()
+      const trailer = await this.fetcher.fetchTrailer()
 
-  private filterSimilarData = async () => {}
+      return {
+        id: title.data.id,
+        backdrop_path: title.data.backdrop_path
+          ? `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${title.data.backdrop_path}`
+          : 'https://via.placeholder.com/150',
+        genres: title.data.genres,
+        original_title: title.data.original_title,
+        title: title.data.title,
+        overview: title.data.overview,
+        poster_path: title.data.poster_path
+          ? `https://image.tmdb.org/t/p/w500${title.data.poster_path}`
+          : 'https://via.placeholder.com/150',
+        release_date: title.data.release_date,
+        runtime: title.data.runtime,
+        tagline: title.data.tagline,
+        audience: audience.data.results,
+        trailer: trailer.data.results,
+      }
+    } catch (error) {
+      throw new Error('Error on TheMovieDbFilteredTitle: filterHeroData.')
+    }
+  }
 
-  private filterCastData = async () => {
+  private filterSimilarData = async () => {
+    try {
+      const response = await this.fetcher.fetchSimilar()
+      const data: Similar[] = []
+      if (!response.data.results.length) return []
+
+      response.data.results.forEach((element) => {
+        const item: Similar = {
+          id: element.id,
+          src: element.poster_path
+            ? `https://image.tmdb.org/t/p/w500${element.poster_path}`
+            : 'https://via.placeholder.com/150',
+          title: element.title || element.original_title || 'N/A',
+          vote: element.vote_average || 0,
+          media: this.type,
+        }
+        data.push(item)
+      })
+      return data
+    } catch (error) {
+      throw new Error('Error on TheMovieDbFilteredTitle: filterSimilarData.')
+    }
+  }
+
+  private filterCreditsData = async () => {
     try {
       const response = await this.fetcher.fetchCredits()
-      if (!response.data.cast.length) return []
-
       const data: Cast[] = []
+      if (!response.data.cast.length) return []
       response.data.cast.forEach((element) => {
         const item: Cast = {
           name: element.name || 'N/A',
@@ -51,12 +112,27 @@ class TheMovieDbFilteredTitle {
       })
       return data
     } catch (error) {
-      console.error('Error on TheMovieDbFilteredTitle: filterCastData.')
-      return []
+      throw new Error('Error on TheMovieDbFilteredTitle: filterCastData.')
     }
   }
 
-  private filterReviewsData = async () => {}
+  private filterReviewsData = async () => {
+    try {
+      const response = await this.fetcher.fetchReviews()
+      const data: Review[] = []
+      if (!response.data.results.length) return []
+      response.data.results.forEach((element) => {
+        const item: Review = {
+          user: element.author_details.username || 'N/A',
+          content: element.content || 'N/A',
+        }
+        data.push(item)
+      })
+      return data
+    } catch (error) {
+      throw new Error('Error on TheMovieDbFilteredTitle: filterReviewsData.')
+    }
+  }
 }
 
 export default TheMovieDbFilteredTitle
