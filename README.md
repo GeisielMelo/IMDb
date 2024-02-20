@@ -29,7 +29,7 @@ An app created in my free time with the aim of being a front-end-only applicatio
 
 ## License
 
-- [MIT](https://choosealicense.com/licenses/mit)
+- [MIT](https://github.com/GeisielMelo/TMDb/blob/main/LICENSE)
 
 > **Note**: All information present on this app is gathered from 'TheMovieDB'.
 
