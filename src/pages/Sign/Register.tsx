@@ -45,12 +45,12 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <section className='flex h-[100dvh] justify-center items-center'>
-        <div className='max-w-[400px] w-full shadow-custom rounded-md text-center'>
+      <section className='flex min-h-[100dvh] justify-center items-center'>
+        <div className='max-w-[400px] w-full shadow-custom rounded-md text-center bg-white'>
           <form className='flex flex-col justify-center items-center gap-4 px-8  w-full ' onSubmit={handleSubmit}>
             <h1 className='mt-8'>Sign Up</h1>
             <input
-              className='px-2 py-1 w-full border border-slate-400 rounded-lg'
+              className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
               type='email'
               name='email'
               autoComplete='on'
@@ -59,7 +59,7 @@ const Register: React.FC = () => {
               onChange={(e) => setData({ ...data, email: e.target.value })}
             />
             <input
-              className='px-2 py-1 w-full border border-slate-400 rounded-lg'
+              className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
               type='password'
               name='password'
               autoComplete='on'
@@ -68,7 +68,7 @@ const Register: React.FC = () => {
               onChange={(e) => setData({ ...data, passA: e.target.value })}
             />
             <input
-              className='px-2 py-1 w-full border border-slate-400 rounded-lg'
+              className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
               type='password'
               name='confirm-password'
               autoComplete='on'
