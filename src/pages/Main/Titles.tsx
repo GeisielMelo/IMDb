@@ -6,6 +6,7 @@ import { TitleCredits } from '../../components/Title/TitleCredits'
 import { TitleReviews } from '../../components/Title/TitleReviews'
 import Navigation from '../../components/Header/Navigation'
 import Footer from '../../components/Footer/Footer'
+import { useScrollToTop } from '../../hooks/useScrollToTop'
 
 type IParams = {
   id?: string
@@ -13,6 +14,7 @@ type IParams = {
 }
 
 const Titles: React.FC = () => {
+  useScrollToTop()
   const params = useParams<IParams>()
   const { locale } = useLanguages()
   const { type, id } = params
