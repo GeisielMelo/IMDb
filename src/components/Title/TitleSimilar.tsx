@@ -1,4 +1,7 @@
-import Slider from '../Carousel/Slider'
+import { useFetchCategory } from '../../hooks/useFetchCategory'
+import { MovieData } from '../../types/MovieData'
+import { filterMovieDataArr } from '../../utils/filterData'
+import { Card } from '../Card/Card'
 
 type Similar = {
   locale: string
@@ -9,11 +12,29 @@ type Similar = {
 export const TitleSimilar: React.FC<Similar> = ({ locale, type, id }) => {
   const url = `https://api.themoviedb.org/3/${type}/${id}/similar?language=${locale}&page=1`
 
+  const { data, error } = useFetchCategory<MovieData[]>(url)
+
+  if (error) return null
+
   return (
-    <section className='flex item-center justify-center'>
-      <div className='my-4'>
-        <Slider sectionName='similar' category='Similar' url={url} />
-      </div>
+    <section className='flex flex-col item-center justify-center w-full py-4'>
+      <h1 className='flex ml-8 mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-zinc-700 text-white rounded-full max-w-max capitalize'>
+        {type}
+      </h1>
+      {data && (
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-8'>
+          {filterMovieDataArr(data).slice(0, 6).map((element, key) => (
+            <Card
+              key={key}
+              id={element.id}
+              src={element.src}
+              title={element.title}
+              vote={element.vote}
+              media={element.media}
+            />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
