@@ -9,6 +9,7 @@ import Watchlist from './pages/Main/Watchlist'
 import NotFound from './components/Error/NotFound'
 import Search from './pages/Main/Search'
 import Titles from './pages/Main/Titles'
+import { Helmet } from 'react-helmet-async'
 
 type RoutesProps = {
   children: ReactNode
@@ -27,6 +28,11 @@ const AppRoutes: React.FC = () => {
 
   return (
     <BrowserRouter>
+      <Helmet>
+        <title>TMDb</title>
+        <link rel='canonical' href={window.location.href} />
+        <meta name="description" content='A better way to visualize data from the TMDb with ease.' />
+      </Helmet>
       <Routes>
         <Route path={'/'} element={<Home />} />
         <Route path={'*'} element={<NotFound />} />

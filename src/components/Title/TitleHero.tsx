@@ -4,6 +4,7 @@ import { handleGetTitleName } from '../../utils/handleFunctionsUtils'
 import { Image } from './components/Image'
 import { Info } from './components/Info'
 import { HeroSkeleton } from './components/Skeletons'
+import { Helmet } from 'react-helmet-async';
 
 type Hero = {
   locale: string
@@ -25,6 +26,12 @@ export const TitleHero: React.FC<Hero> = ({ locale, type, id }) => {
 
   return (
     <>
+      <Helmet>
+        <meta charSet='utf-8' />
+        <title>{handleGetTitleName(data)}</title>
+        <meta name="description" content={data.tagline || data.title} />
+        <link rel='canonical' href={window.location.href} />
+      </Helmet>
       <section id='DesktopVersion' className='hidden md:block'>
         {loading ? (
           <HeroSkeleton />
