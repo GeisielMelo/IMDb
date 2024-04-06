@@ -14,6 +14,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Navigation />
+      
       <main className='min-h-screen flex flex-col item-center justify-center gap-8'>
         <Showcase url={trending} />
         <Slider sectionName='trending' category='Trending' url={trending} />

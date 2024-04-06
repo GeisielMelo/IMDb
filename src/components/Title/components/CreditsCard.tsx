@@ -21,8 +21,8 @@ export const CreditsCard: React.FC<CreditsCard> = ({ name, character, profilePat
       />
       {!imageLoaded && <div className='cursor-pointer rounded-t aspect-[9/13] animate-pulse bg-zinc-600' />}
       <div className='p-2 h-16'>
-        <h1 className='truncate'>{name}</h1>
-        <p className='truncate'>{character}</p>
+        <p className='truncate'>{name}</p>
+        <span className='truncate'>{character}</span>
       </div>
     </div>
   )

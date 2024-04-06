@@ -31,8 +31,8 @@ export const Info: React.FC<Info> = ({ data, locale, type, id }) => {
         <Watch element={data} type={type} />
       </div>
 
-      <h1 className='my-4 font-normal text-[1.1rem] italic opacity-70 text-white'>{data.tagline}</h1>
-      {data.overview && <h2 className='font-semibold text-lg text-white'>Overview</h2>}
+      <p className='my-4 font-normal text-[1.1rem] italic opacity-70 text-white'>{data.tagline}</p>
+      {data.overview && <span className='font-semibold text-lg text-white'>Overview</span>}
       <p className='mt-2 mb-4 text-white'>{data.overview}</p>
       <Audience type={type} id={id} />
     </div>

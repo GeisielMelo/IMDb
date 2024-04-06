@@ -29,9 +29,9 @@ export const TitleCredits: React.FC<Credits> = ({ locale, type, id }) => {
         <div>Loading...</div>
       ) : (
         <div className='max-w-5xl w-full'>
-          <h1 className='mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-zinc-700 text-white rounded-full max-w-max'>
+          <h3 className='mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-zinc-700 text-white rounded-full max-w-max'>
             Top Cast
-          </h1>
+          </h3>
           <div className=' grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2'>
             {cast
               .slice(0, maxCards)

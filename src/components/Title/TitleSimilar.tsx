@@ -18,9 +18,9 @@ export const TitleSimilar: React.FC<Similar> = ({ locale, type, id }) => {
 
   return (
     <section className='flex flex-col item-center justify-center w-full py-4'>
-      <h1 className='flex ml-8 mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-zinc-700 text-white rounded-full max-w-max capitalize'>
+      <h2 className='flex ml-8 mb-4 px-4 py-0.5 font-sans font-semibold text-lg border border-zinc-700 text-white rounded-full max-w-max capitalize'>
         {type}
-      </h1>
+      </h2>
       {data && (
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-8'>
           {filterMovieDataArr(data).slice(0, 6).map((element, key) => (

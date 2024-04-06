@@ -62,7 +62,7 @@ export const Card: React.FC<CardProps> = ({ id, src, title, vote, media }) => {
           <Star className='h-3 text-yellow-300' />
         </div>
 
-        <h1 className='text-[calc(.6em+0.7vw)] leading-7 px-2 h-[60px] overflow-hidden'>{title}</h1>
+        <p className='text-[calc(.6em+0.7vw)] leading-7 px-2 h-[60px] overflow-hidden'>{title}</p>
 
         <div className='w-full mt-auto mb-4 px-2 text-white'>
           <button
