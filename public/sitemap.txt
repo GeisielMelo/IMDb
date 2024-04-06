@@ -1,0 +1,5 @@
+https://tmdb.geisielmelo.vercel.app/
+https://tmdb.geisielmelo.vercel.app/sign-in
+https://tmdb.geisielmelo.vercel.app/sign-up
+https://tmdb.geisielmelo.vercel.app/my-list
+https://tmdb.geisielmelo.vercel.app/search
